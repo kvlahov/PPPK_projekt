@@ -5,9 +5,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace PPPK.DAL.Implementations
+namespace PPPK.DAL.Implementations.SqlConnections
 {
-    public class SqlConnectionGenericRepository<T> : IRepository<T> where T : class, new()
+    public abstract class SqlConnectionGenericRepository<T> : IRepository<T> where T : class, new()
     {
         public SqlConnection Connection { get; private set; }
         public SqlConnectionGenericRepository(SqlConnection connection)
@@ -20,7 +20,7 @@ namespace PPPK.DAL.Implementations
             using (var cmd = Connection.CreateCommand())
             {
                 InsertCommandParameters(entity, cmd, out SqlParameter newId);
-                cmd.ExecuteNonQuery();                
+                cmd.ExecuteNonQuery();
                 return long.Parse(newId.Value.ToString());
             }
         }
@@ -53,10 +53,7 @@ namespace PPPK.DAL.Implementations
         {
             using (var cmd = Connection.CreateCommand())
             {
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    return GetAllEntitiesFromReader(reader);
-                }
+                return GetAllEntitiesFromReader(cmd);
             }
         }
 
@@ -64,18 +61,16 @@ namespace PPPK.DAL.Implementations
         {
             using (var cmd = Connection.CreateCommand())
             {
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    return GetEntityFromReader(id, reader);
-                }
+                return GetEntityFromReader(id, cmd);
+
             }
         }
 
-        protected virtual void InsertCommandParameters(T entity, SqlCommand cmd, out SqlParameter newId) { newId = new SqlParameter(); }
-        protected virtual void UpdateCommandParameters(T entity, SqlCommand cmd) { }
-        protected virtual void DeleteCommandParameters(T entity, SqlCommand cmd) { }
-        protected virtual T GetEntityFromReader(long id, SqlDataReader reader) { return null; }
-        protected virtual IEnumerable<T> GetAllEntitiesFromReader(SqlDataReader reader) { return null; }
+        protected abstract void InsertCommandParameters(T entity, SqlCommand cmd, out SqlParameter newId);
+        protected abstract void UpdateCommandParameters(T entity, SqlCommand cmd);
+        protected abstract void DeleteCommandParameters(T entity, SqlCommand cmd);
+        protected abstract T GetEntityFromReader(long id, SqlCommand cmd);
+        protected abstract IEnumerable<T> GetAllEntitiesFromReader(SqlCommand cmd);
 
         public void Dispose()
         {

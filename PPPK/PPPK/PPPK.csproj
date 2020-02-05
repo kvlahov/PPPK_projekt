@@ -121,11 +121,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DAL\Implementations\SqlConnectionGenericRepository.cs" />
+    <Compile Include="DAL\Implementations\SqlConnections\DriverRepository.cs" />
+    <Compile Include="DAL\Implementations\SqlConnections\SqlConnectionGenericRepository.cs" />
+    <Compile Include="DAL\Interfaces\SqlConnections\IDriverRepository.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Driver.cs" />
+    <Compile Include="Models\FuelInfo.cs" />
+    <Compile Include="Models\RouteInfo.cs" />
+    <Compile Include="Models\ServiceInfo.cs" />
+    <Compile Include="Models\TravelOrder.cs" />
+    <Compile Include="Models\TravelOrderType.cs" />
+    <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -167,7 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
