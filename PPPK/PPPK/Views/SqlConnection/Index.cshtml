@@ -1,0 +1,312 @@
+﻿@model PPPK.ViewModels.SqlConnectionViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Sql Connection</h2>
+
+<!-- Modal -->
+<div id="modal-form" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body" style="overflow:hidden;">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#drivers">Drivers</a></li>
+        <li><a data-toggle="tab" href="#vehicles">Vehicles</a></li>
+        <li><a data-toggle="tab" href="#travel-orders">Travel Order</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="drivers" class="tab-pane fade in active">
+            <h3>Drivers</h3>
+            <div>
+                <table class="table table-condensed table-hover" id="driver-table">
+                    <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Driver's liscence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.DriverListViewModel.Count(); i++)
+                        {
+                            @Html.HiddenFor(m => m.DriverListViewModel[i].IDDriver)
+                            <tr>
+                                <td>@Html.DisplayFor(m => m.DriverListViewModel[i].FirstName)</td>
+                                <td>@Html.DisplayFor(m => m.DriverListViewModel[i].LastName)</td>
+                                <td>@Html.DisplayFor(m => m.DriverListViewModel[i].DriversLicence)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+        <div id="vehicles" class="tab-pane fade">
+            <h3>Vehicles</h3>
+            <div>
+                <table class="table table-condensed table-hover" id="vehicle-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Type</th>
+                            <th>Year manufactured</th>
+                            <th>Registration</th>
+                            <th>Initial km</th>
+                            <th>Available</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.VehicleListViewModel.Count(); i++)
+                        {
+                            @Html.HiddenFor(m => m.VehicleListViewModel[i].IDVehicle)
+                            <tr>
+                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].Model)</td>
+                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].Type)</td>
+                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].YearManufactured)</td>
+                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].Registration)</td>
+                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].InitialKilometres)</td>
+                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].IsAvailable)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div id="travel-orders" class="tab-pane fade">
+            <h3>Travel orders</h3>
+            <div>
+                <table class="table table-condensed table-hover" id="travel-order-table">
+                    <thead>
+                        <tr>
+                            <th>Driver</th>
+                            <th>Vehicle</th>
+                            <th>Start city</th>
+                            <th>End city</th>
+                            <th>Expected number of days</th>
+                            <th>Type</th>
+                            <th>Reason for travel</th>
+                            <th>Document Date</th>
+                            <th>Total cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.TravelOrderListViewModel.Count(); i++)
+                        {
+                            @Html.HiddenFor(m => m.TravelOrderListViewModel[i].IDTravelOrder)
+                            <tr>
+                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].DriverID)</td>
+                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].VehicleID)</td>
+                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].CityStartId)</td>
+                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].CityEndId)</td>
+                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].ExpectedNumberOfDays)</td>
+                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].TravelOrderTypeID)</td>
+                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].ReasonForTravel)</td>
+                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].DocumentDate)</td>
+                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].TotalCost)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+
+        const dtConfig = {
+            '#driver-table': {},
+            '#vehicle-table': {},
+            '#travel-order-table': {
+                getUrl: '@Url.Action("GetTravelOrderForm", "SqlConnection")',
+                createUrl: '@Url.Action("InsertTravelOrderForm", "SqlConnection")',
+                updateUrl: '@Url.Action("UpdateTravelOrderForm", "SqlConnection")',
+                deleteUrl: '@Url.Action("DeleteTravelOrderForm", "SqlConnection")'
+            }
+        }
+
+        initDataTable(dtConfig);
+
+        function initDataTable(options) {
+            for (var selector in options) {
+                var table = $(selector).DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            text: 'Clear search',
+                            action: function (e, dt, node, config) {
+                                table.columns().search('').draw();
+                                //reset filters
+                                $(table.columns().footer()).find('select option:first-child').prop('selected', true);
+                            }
+                        },
+                        {
+                            text: 'New',
+                            action: function (e, dt, node, config) {
+                                showInsertForm(options[selector].createUrl);
+                            }
+                        },
+                        {
+                            text: 'Edit',
+                            action: function (e, dt, node, config) {
+                                showEditForm();
+                            }
+                        },
+                        {
+                            text: 'Delete',
+                            action: function (e, dt, node, config) {
+                                deleteEntity();
+                            }
+                        },
+                    ],
+                    select: true
+                });
+
+                table.columns().flatten().each(function (colIdx) {
+                    // Create the select list and search operation
+                    var select = $('<select />')
+                        .addClass('form-control')
+                        .appendTo(
+                            table.column(colIdx).footer()
+                        )
+                        .on('change', function () {
+                            table
+                                .column(colIdx)
+                                .search($(this).val())
+                                .draw();
+                        });
+
+                    appendFilterOptions(table, colIdx, select);
+
+                    // Get the search data for the first column and add to the select list
+
+                });
+
+                table.on('draw.dt', function () {
+                    table.columns().flatten().each(function (colIdx) {
+                        const select = $(table.column(colIdx).footer()).find('select');
+                        const selectedVal = select.val();
+                        select.empty();
+
+                        appendFilterOptions(table, colIdx, select);
+                        select.val(selectedVal);
+                    });
+                });
+            }
+        }
+
+        function appendFilterOptions(table, colIdx, select) {
+            table
+                .column(colIdx, { search: 'applied' })
+                .data()
+                .sort()
+                .unique()
+                .each(function (d) {
+                    select.append($('<option value="' + d + '">' + d + '</option>'));
+                });
+
+            select.prepend("<option value='' selected>-</option>");
+        }
+
+        function showInsertForm(insertUrl) {
+
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetTravelOrderForm", "SqlConnection")',
+                dataType: 'html',
+                success: function (response) {
+                    $('.modal-title').text('Create');
+                    $('.modal-body').html(response);
+                    $('.modal-footer').find('.btn-primary').remove();
+
+                    $('<button/>')
+                        .text('Create')
+                        .addClass('btn btn-primary')
+                        .on('click', e => makeAjaxRequest(insertUrl, 'POST', {model: $('.modal-body').find('form').serializeObject()}))
+                        .appendTo($('.modal-footer'));
+
+                    $('#modal-form').modal('show');
+                }
+            })
+        }
+
+        function makeAjaxRequest(url, method, data) {
+            $.ajax({
+                type: method,
+                url: url,
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (response) {
+
+                }
+            });
+        }
+
+        $.fn.serializeObject = function() {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function() {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
+
+    </script>
+}

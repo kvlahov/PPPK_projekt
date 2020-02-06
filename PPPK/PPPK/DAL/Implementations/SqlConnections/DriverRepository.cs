@@ -66,7 +66,8 @@ namespace PPPK.DAL.Implementations.SqlConnections
             {
                 IDDriver = Convert.ToInt64(reader[nameof(type.IDDriver)].ToString()),
                 FirstName = reader[nameof(type.FirstName)].ToString(),
-                LastName = reader[nameof(type.LastName)].ToString()
+                LastName = reader[nameof(type.LastName)].ToString(),
+                DriversLicence = reader[nameof(type.DriversLicence)].ToString()
             };
         }
 

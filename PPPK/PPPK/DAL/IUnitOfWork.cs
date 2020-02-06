@@ -1,4 +1,5 @@
 ﻿using PPPK.DAL.Interfaces.SqlConnections;
+using PPPK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace PPPK.DAL
         IVehicleRepository VehicleRepository { get; }
         ICityRepository CityRepository { get; }
         ITravelOrderRepository TravelOrderRepository { get; }
+        IRepository<TravelOrderType> TravelOrderTypeRepository { get; }
 
         void BeginTransaction();
         void CommitTranasction();

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using PPPK.DAL.Implementations.SqlConnections;
 using PPPK.DAL.Interfaces.SqlConnections;
+using PPPK.Models;
 
 namespace PPPK.DAL.Implementations
 {
@@ -21,6 +22,7 @@ namespace PPPK.DAL.Implementations
         public ICityRepository CityRepository { get; private set; }
 
         public ITravelOrderRepository TravelOrderRepository{ get; private set; }
+        public IRepository<TravelOrderType> TravelOrderTypeRepository { get; private set; }
 
         public AppUnitOfWork()
         {
@@ -33,6 +35,7 @@ namespace PPPK.DAL.Implementations
             VehicleRepository = new VehicleRepository(connection);
             CityRepository = new CityRepository(connection);
             TravelOrderRepository = new TravelOrderRepository(connection);
+            TravelOrderTypeRepository = new TravelOrderTypeRepository(connection);
         }
 
         public void BeginTransaction()

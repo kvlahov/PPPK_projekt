@@ -120,12 +120,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SqlConnectionController.cs" />
     <Compile Include="DAL\Implementations\AppUnitOfWork.cs" />
     <Compile Include="DAL\Implementations\SqlConnections\CityRepository.cs" />
     <Compile Include="DAL\Implementations\SqlConnections\DriverRepository.cs" />
     <Compile Include="DAL\Implementations\SqlConnections\SqlConnectionGenericRepository.cs" />
     <Compile Include="DAL\Implementations\SqlConnections\TravelOrderRepository.cs" />
+    <Compile Include="DAL\Implementations\SqlConnections\TravelOrderTypesRepository.cs" />
     <Compile Include="DAL\Implementations\SqlConnections\VehicleRepository.cs" />
     <Compile Include="DAL\Interfaces\SqlConnections\ICityRepository.cs" />
     <Compile Include="DAL\Interfaces\SqlConnections\IDriverRepository.cs" />
@@ -145,6 +146,11 @@
     <Compile Include="Models\TravelOrderType.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SqlConnectionService.cs" />
+    <Compile Include="ViewModels\DriverViewModel.cs" />
+    <Compile Include="ViewModels\SqlConnectionViewModel.cs" />
+    <Compile Include="ViewModels\TravelOrderViewModel.cs" />
+    <Compile Include="ViewModels\VehicleViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -179,9 +185,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\SqlConnection\Index.cshtml" />
+    <Content Include="Views\SqlConnection\_InsertTravelOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
