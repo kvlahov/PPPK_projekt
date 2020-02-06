@@ -121,13 +121,22 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAL\Implementations\AppUnitOfWork.cs" />
+    <Compile Include="DAL\Implementations\SqlConnections\CityRepository.cs" />
     <Compile Include="DAL\Implementations\SqlConnections\DriverRepository.cs" />
     <Compile Include="DAL\Implementations\SqlConnections\SqlConnectionGenericRepository.cs" />
+    <Compile Include="DAL\Implementations\SqlConnections\TravelOrderRepository.cs" />
+    <Compile Include="DAL\Implementations\SqlConnections\VehicleRepository.cs" />
+    <Compile Include="DAL\Interfaces\SqlConnections\ICityRepository.cs" />
     <Compile Include="DAL\Interfaces\SqlConnections\IDriverRepository.cs" />
+    <Compile Include="DAL\Interfaces\SqlConnections\ITravelOrderRepository.cs" />
+    <Compile Include="DAL\Interfaces\SqlConnections\IVehicleRepository.cs" />
     <Compile Include="DAL\IRepository.cs" />
+    <Compile Include="DAL\IUnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Driver.cs" />
     <Compile Include="Models\FuelInfo.cs" />
     <Compile Include="Models\RouteInfo.cs" />

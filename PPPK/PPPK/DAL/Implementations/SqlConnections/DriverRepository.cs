@@ -9,7 +9,7 @@ using System.Web;
 
 namespace PPPK.DAL.Implementations.SqlConnections
 {
-    public class DriverRepository : SqlConnectionGenericRepository<Driver>, IDriverRepository
+    class DriverRepository : SqlConnectionGenericRepository<Driver>, IDriverRepository
     {
         public DriverRepository(SqlConnection connection) : base(connection)
         {
@@ -33,12 +33,7 @@ namespace PPPK.DAL.Implementations.SqlConnections
                     while (reader.Read())
                     {
                         var type = default(Driver);
-                        yield return new Driver
-                        {
-                            IDDriver = Convert.ToInt64(reader[nameof(type.IDDriver)]),
-                            FirstName = reader[nameof(type.FirstName)].ToString(),
-                            LastName = reader[nameof(type.LastName)].ToString()
-                        };
+                        yield return GetDriverFromReader(type, reader);
                     }
                 }
             }
@@ -58,26 +53,45 @@ namespace PPPK.DAL.Implementations.SqlConnections
                 {
                     while (reader.Read())
                     {
-                        return new Driver
-                        {
-                            IDDriver = Convert.ToInt64(reader[nameof(type.IDDriver)]),
-                            FirstName = reader[nameof(type.FirstName)].ToString(),
-                            LastName = reader[nameof(type.LastName)].ToString()
-                        };
+                        return GetDriverFromReader(type, reader);
                     }
                 }
                 return null;
             }
         }
 
+        private static Driver GetDriverFromReader(Driver type, SqlDataReader reader)
+        {
+            return new Driver
+            {
+                IDDriver = Convert.ToInt64(reader[nameof(type.IDDriver)].ToString()),
+                FirstName = reader[nameof(type.FirstName)].ToString(),
+                LastName = reader[nameof(type.LastName)].ToString()
+            };
+        }
+
         protected override void InsertCommandParameters(Driver entity, SqlCommand cmd, out SqlParameter newId)
         {
-            throw new NotImplementedException();
+            cmd.CommandText = $"insert into Driver({nameof(entity.FirstName)}, {nameof(entity.LastName)}, {nameof(entity.DriversLicence)})" +
+                $" values ({entity.FirstName},{entity.LastName},{entity.DriversLicence}); " +
+                $" set @newId = scope_identity();";
+            cmd.CommandType = CommandType.Text;
+            newId = new SqlParameter("@newId", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+            cmd.Parameters.Add(newId);
         }
 
         protected override void UpdateCommandParameters(Driver entity, SqlCommand cmd)
         {
-            throw new NotImplementedException();
+            cmd.CommandText = $"update Driver set " +
+                $"{nameof(entity.FirstName)} = {entity.FirstName}, " +
+                $"{nameof(entity.LastName)} = {entity.LastName}, " +
+                $"{nameof(entity.DriversLicence)} = {entity.DriversLicence} " +
+                $"where {nameof(entity.IDDriver)} = {entity.IDDriver}";
+
+            cmd.CommandType = CommandType.Text;
         }
     }
 }
