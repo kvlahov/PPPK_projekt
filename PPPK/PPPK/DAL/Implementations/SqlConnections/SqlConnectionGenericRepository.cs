@@ -19,20 +19,39 @@ namespace PPPK.DAL.Implementations.SqlConnections
         {
             using (var cmd = Connection.CreateCommand())
             {
-                InsertCommandParameters(entity, cmd, out SqlParameter newId);
-                cmd.ExecuteNonQuery();
-                return long.Parse(newId.Value.ToString());
+                try
+                {
+                    cmd.Transaction = Connection.BeginTransaction();
+                    InsertCommandParameters(entity, cmd, out SqlParameter newId);
+                    cmd.ExecuteNonQuery();
+                    cmd.Transaction.Commit();
+                    return long.Parse(newId.Value.ToString());
+                }
+                catch (Exception e)
+                {
+                    cmd.Transaction?.Rollback();
+                    return 0;
+                }
             }
         }
 
-        public int Delete(T entity)
+        public int Delete(long id)
         {
             var rowsAffected = 0;
 
             using (var cmd = Connection.CreateCommand())
             {
-                DeleteCommandParameters(entity, cmd);
-                rowsAffected = cmd.ExecuteNonQuery();
+                try
+                {
+                    cmd.Transaction = Connection.BeginTransaction();
+                    DeleteCommandParameters(id, cmd);
+                    rowsAffected = cmd.ExecuteNonQuery();
+                    cmd.Transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    cmd.Transaction?.Rollback();
+                }
             }
             return rowsAffected;
         }
@@ -43,8 +62,18 @@ namespace PPPK.DAL.Implementations.SqlConnections
 
             using (var cmd = Connection.CreateCommand())
             {
-                UpdateCommandParameters(newEntity, cmd);
-                rowsAffected = cmd.ExecuteNonQuery();
+                try
+                {
+                    cmd.Transaction = Connection.BeginTransaction();
+                    UpdateCommandParameters(newEntity, cmd);
+                    rowsAffected = cmd.ExecuteNonQuery();
+                    cmd.Transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    Connection.FireInfoMessageEventOnUserErrors = true;
+                    cmd.Transaction?.Rollback();
+                }
             }
             return rowsAffected;
         }
@@ -68,7 +97,7 @@ namespace PPPK.DAL.Implementations.SqlConnections
 
         protected abstract void InsertCommandParameters(T entity, SqlCommand cmd, out SqlParameter newId);
         protected abstract void UpdateCommandParameters(T entity, SqlCommand cmd);
-        protected abstract void DeleteCommandParameters(T entity, SqlCommand cmd);
+        protected abstract void DeleteCommandParameters(long id, SqlCommand cmd);
         protected abstract T GetEntityFromReader(long id, SqlCommand cmd);
         protected abstract IEnumerable<T> GetAllEntitiesFromReader(SqlCommand cmd);
 

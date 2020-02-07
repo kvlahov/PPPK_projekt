@@ -15,9 +15,9 @@ namespace PPPK.DAL.Implementations.SqlConnections
         {
         }
 
-        protected override void DeleteCommandParameters(City entity, SqlCommand cmd)
+        protected override void DeleteCommandParameters(long id, SqlCommand cmd)
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override IEnumerable<City> GetAllEntitiesFromReader(SqlCommand cmd)
@@ -65,7 +65,7 @@ namespace PPPK.DAL.Implementations.SqlConnections
 
         protected override void UpdateCommandParameters(City entity, SqlCommand cmd)
         {
-            throw new NotImplementedException();
+            
         }
 
         private City GetCityFromReader(City type, SqlDataReader reader)

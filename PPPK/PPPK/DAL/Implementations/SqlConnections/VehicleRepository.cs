@@ -15,11 +15,12 @@ namespace PPPK.DAL.Implementations.SqlConnections
         {
         }
 
-        protected override void DeleteCommandParameters(Vehicle entity, SqlCommand cmd)
+        protected override void DeleteCommandParameters(long id, SqlCommand cmd)
         {
+            var type = default(Vehicle);
             cmd.CommandText = "deleteVehicle";
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue($"@{nameof(entity.IDVehicle)}", entity.IDVehicle);
+            cmd.Parameters.AddWithValue($"@{nameof(type.IDVehicle)}", id);
         }
 
         protected override IEnumerable<Vehicle> GetAllEntitiesFromReader(SqlCommand cmd)

@@ -11,8 +11,6 @@ namespace PPPK.Models
         public long DriverID { get; set; }
         public long VehicleID { get; set; }
         public long TravelOrderTypeID { get; set; }
-        public long RouteInfoID { get; set; }
-        public long FuelInfoID { get; set; }
         public long CityStartId { get; set; }
         public long CityEndId { get; set; }
         public int ExpectedNumberOfDays { get; set; }

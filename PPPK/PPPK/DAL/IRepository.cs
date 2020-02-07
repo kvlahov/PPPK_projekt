@@ -12,6 +12,6 @@ namespace PPPK.DAL
         T GetById(long id);
         long Add(T entity);
         int Update(T newEntity);
-        int Delete(T entity);
+        int Delete(long id);
     }
 }

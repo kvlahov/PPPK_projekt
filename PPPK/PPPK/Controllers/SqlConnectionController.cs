@@ -21,6 +21,11 @@ namespace PPPK.Controllers
             var viewModel = _service.GetSqlConnectionViewModel();
             return View(viewModel);
         }
+        [HttpGet]
+        public ActionResult GetAllTravelOrders()
+        {
+            return Json(new { data = _service.GetSqlConnectionViewModel().TravelOrderListViewModel }, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         public ActionResult GetTravelOrderForm(long? id)
@@ -30,20 +35,95 @@ namespace PPPK.Controllers
         }
 
         [HttpPost]
-        public ActionResult InsertTravelOrderForm(TravelOrderViewModel model)
+        public ActionResult InsertTravelOrder(TravelOrderViewModel model)
         {
-            return RedirectToAction("Index");
+            var success = _service.InsertTravelOrder(model.TravelOrder);
+            return Json(new { success });
         }
+
         [HttpPatch]
-        public ActionResult UpdateTravelOrderForm(TravelOrder model)
+        public ActionResult UpdateTravelOrder(TravelOrderViewModel model)
         {
-            return RedirectToAction("Index");
+            var success = _service.UpdateTravelOrder(model.TravelOrder);
+            return Json(new { success });
         }
 
         [HttpDelete]
-        public ActionResult DeleteTravelOrderForm(long id)
+        public ActionResult DeleteTravelOrder(long id)
         {
-            return RedirectToAction("Index");
+            var success = _service.RemoveTravelOrder(id);
+            return Json(new { success });
+        }
+
+        //drivers
+        [HttpGet]
+        public ActionResult GetAllDrivers()
+        {
+            return Json(new { data = _service.GetSqlConnectionViewModel().DriverListViewModel }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetDriverForm(long? id)
+        {
+            return null;
+            //return PartialView("_InsertTravelOrder", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult InsertDriver(Driver model)
+        {
+            var success = false;
+            return Json(new { success });
+        }
+
+        [HttpPatch]
+        public ActionResult UpdateDriver(Driver model)
+        {
+            var success = false;
+            return Json(new { success });
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteDriver(long id)
+        {
+            var success = false;
+            return Json(new { success });
+        }
+
+        //vehicles
+
+        [HttpGet]
+        public ActionResult GetAllVehicles()
+        {
+            return Json(new { data = _service.GetSqlConnectionViewModel().VehicleListViewModel }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetVehicleForm(long? id)
+        {
+            return null;
+            //return PartialView("_InsertTravelOrder", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult InsertVehicle(Vehicle model)
+        {
+            var success = false;
+            return Json(new { success });
+        }
+
+        [HttpPatch]
+        public ActionResult UpdateVehicle(Vehicle model)
+        {
+            var success = false;
+            return Json(new { success });
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteVehicle(long id)
+        {
+            var success = false;
+            return Json(new { success });
         }
     }
 }

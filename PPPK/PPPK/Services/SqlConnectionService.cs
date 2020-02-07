@@ -1,5 +1,6 @@
 ﻿using PPPK.DAL;
 using PPPK.DAL.Implementations;
+using PPPK.Models;
 using PPPK.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -41,11 +42,32 @@ namespace PPPK.Services
 
         }
 
-        private IEnumerable<TravelOrderViewModel> GetTraverOrderListViewModel()
+        internal bool RemoveTravelOrder(long id)
         {
-            TravelOrderViewModel vm = new TravelOrderViewModel();
 
-            return null;
+            var rowsAffected = _unitOfWork.TravelOrderRepository.Delete(id);
+
+            
+
+            return rowsAffected > 0;
+        }
+
+        internal bool UpdateTravelOrder(TravelOrder travelOrder)
+        {
+
+            var rowsAffected = _unitOfWork.TravelOrderRepository.Update(travelOrder);
+
+
+            return rowsAffected > 0;
+        }
+
+        internal bool InsertTravelOrder(TravelOrder travelOrder)
+        {
+
+            var newID = _unitOfWork.TravelOrderRepository.Add(travelOrder);
+
+
+            return newID != 0;
         }
     }
 }

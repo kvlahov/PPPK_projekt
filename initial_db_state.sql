@@ -24,20 +24,6 @@ create table Vehicle
 	IsAvailable bit not null default 1
 );
 
-create table RouteInfo
-(
-	IDRouteInfo int primary key identity,
-	DateTimeStart datetime,
-	DateTimeEnd datetime,
-	LatitudeStart float,
-	LongitudeStart float,
-	LatitudeEnd float,
-	LongitudeEnd float,
-	DistanceInKm float,
-	AverageSpeed float,
-	FuelExpense float
-);
-
 create table ServiceInfo
 (
 	IDService int primary key identity,
@@ -52,36 +38,53 @@ create table TravelOrderType(
 	Type nvarchar(30) not null
 );
 
-create table FuelInfo
-(
-	IDFuelInfo int primary key identity,
-	Location nvarchar(50),
-	Amount float,
-	Price money,
-	DatePurchased date
-)
-
 create table City
 (
 	IDCity int primary key identity,
 	Name nvarchar(50)
-)
+);
+
 create table TravelOrder
 (
 	IDTravelOrder int primary key identity,
 	DriverID int foreign key references Driver(IDDriver) not null,
 	VehicleID int foreign key references Vehicle(IDVehicle) not null,
 	TravelOrderTypeID int foreign key references TravelOrderType(IDTravelOrderType) not null,
-	RouteInfoID int foreign key references RouteInfo(IDRouteInfo),
-	FuelInfoID int foreign key references FuelInfo(IDFuelInfo),
 	ExpectedNumberOfDays int not null default 1,
 	ReasonForTravel nvarchar(100),
 	CityStartId int foreign key references City(IDCity),
 	CityEndId int foreign key references City(IDCity),
 	TotalCost money,
 	DocumentDate datetime
+);
+
+create table FuelInfo
+(
+	IDFuelInfo int primary key identity,
+	Location nvarchar(50),
+	Amount float,
+	Price money,
+	DatePurchased date,
+	TravelOrderID int foreign key references TravelOrder(IDTravelOrder)
 )
+
+create table RouteInfo
+(
+	IDRouteInfo int primary key identity,
+	DateTimeStart datetime,
+	DateTimeEnd datetime,
+	LatitudeStart float,
+	LongitudeStart float,
+	LatitudeEnd float,
+	LongitudeEnd float,
+	DistanceInKm float,
+	AverageSpeed float,
+	FuelExpense float,
+	TravelOrderID int foreign key references TravelOrder(IDTravelOrder)
+);
+
 go
+
 create procedure InitializeData
 as
 begin
@@ -739,13 +742,13 @@ go
 create proc clearDatabase
 as
 begin
-	delete from TravelOrder;
-	delete from ServiceInfo;
-
-	delete from Driver;
-	delete from Vehicle;
 	delete from RouteInfo;
 	delete from FuelInfo;
+	delete from TravelOrder;
+
+	delete from ServiceInfo;
+	delete from Driver;
+	delete from Vehicle;
 end
 go
 
@@ -776,8 +779,6 @@ create procedure insertTravelOrder
 	@CityEndId int,
 	@TotalCost money,
 	@DocumentDate datetime,
-	@RouteInfoID int,
-	@FuelInfoID int,
 	@NewId int output
 as
 begin
@@ -795,9 +796,7 @@ begin
 		CityStartId,
 		CityEndId,
 		TotalCost,
-		DocumentDate,
-		RouteInfoID,
-		FuelInfoID
+		DocumentDate
 	)
 	values
 	(
@@ -809,9 +808,7 @@ begin
 		@CityStartId,
 		@CityEndId,
 		@TotalCost,
-		@DocumentDate,
-		@RouteInfoID,
-		@FuelInfoID
+		@DocumentDate
 	);
 
 	set @NewId = SCOPE_IDENTITY();
@@ -828,9 +825,7 @@ create procedure updateTravelOrder
 	@CityStartId int,
 	@CityEndId int,
 	@TotalCost money,
-	@DocumentDate datetime,
-	@RouteInfoID int,
-	@FuelInfoID int
+	@DocumentDate datetime
 as
 begin
 	update TravelOrder
@@ -843,9 +838,7 @@ begin
 		CityStartId = @CityStartId,
 		CityEndId = @CityEndId,
 		TotalCost = @TotalCost,
-		DocumentDate = @DocumentDate,
-		RouteInfoID = @RouteInfoID,
-		FuelInfoID = @FuelInfoID
+		DocumentDate = @DocumentDate
 	where IDTravelOrder = @IDTravelOrder;
 end
 go
@@ -857,16 +850,15 @@ begin
 	declare @FuelInfoId int;
 	declare @VehicleId int;
 
-	select @RouteInfoId = t.RouteInfoID, @FuelInfoId = t.FuelInfoID, @VehicleId = t.VehicleID
+	select @VehicleId = t.VehicleID
 	from TravelOrder as t 
 	where t.IDTravelOrder = @IDTravelOrder;
-	
 
 	delete from RouteInfo
-	where IDRouteInfo = @RouteInfoId;
+	where TravelOrderID = @IDTravelOrder;
 
 	delete from FuelInfo
-	where IDFuelInfo = @FuelInfoId;
+	where TravelOrderID = @IDTravelOrder;
 
 	update Vehicle
 	set IsAvailable = 1

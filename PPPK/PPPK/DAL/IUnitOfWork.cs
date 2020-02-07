@@ -17,7 +17,7 @@ namespace PPPK.DAL
         IRepository<TravelOrderType> TravelOrderTypeRepository { get; }
 
         void BeginTransaction();
-        void CommitTranasction();
+        void CommitTransaction();
         void RollbackTransaction();
     }
 }

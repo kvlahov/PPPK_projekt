@@ -40,24 +40,17 @@
                 <table class="table table-condensed table-hover" id="driver-table">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>First name</th>
                             <th>Last name</th>
                             <th>Driver's liscence</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 0; i < Model.DriverListViewModel.Count(); i++)
-                        {
-                            @Html.HiddenFor(m => m.DriverListViewModel[i].IDDriver)
-                            <tr>
-                                <td>@Html.DisplayFor(m => m.DriverListViewModel[i].FirstName)</td>
-                                <td>@Html.DisplayFor(m => m.DriverListViewModel[i].LastName)</td>
-                                <td>@Html.DisplayFor(m => m.DriverListViewModel[i].DriversLicence)</td>
-                            </tr>
-                        }
                     </tbody>
                     <tfoot>
                         <tr>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -73,6 +66,7 @@
                 <table class="table table-condensed table-hover" id="vehicle-table">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Model</th>
                             <th>Type</th>
                             <th>Year manufactured</th>
@@ -82,21 +76,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 0; i < Model.VehicleListViewModel.Count(); i++)
-                        {
-                            @Html.HiddenFor(m => m.VehicleListViewModel[i].IDVehicle)
-                            <tr>
-                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].Model)</td>
-                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].Type)</td>
-                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].YearManufactured)</td>
-                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].Registration)</td>
-                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].InitialKilometres)</td>
-                                <td>@Html.DisplayFor(m => m.VehicleListViewModel[i].IsAvailable)</td>
-                            </tr>
-                        }
                     </tbody>
                     <tfoot>
                         <tr>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -114,6 +97,7 @@
                 <table class="table table-condensed table-hover" id="travel-order-table">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Driver</th>
                             <th>Vehicle</th>
                             <th>Start city</th>
@@ -126,24 +110,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 0; i < Model.TravelOrderListViewModel.Count(); i++)
-                        {
-                            @Html.HiddenFor(m => m.TravelOrderListViewModel[i].IDTravelOrder)
-                            <tr>
-                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].DriverID)</td>
-                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].VehicleID)</td>
-                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].CityStartId)</td>
-                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].CityEndId)</td>
-                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].ExpectedNumberOfDays)</td>
-                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].TravelOrderTypeID)</td>
-                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].ReasonForTravel)</td>
-                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].DocumentDate)</td>
-                                <td>@Html.DisplayFor(m => m.TravelOrderListViewModel[i].TotalCost)</td>
-                            </tr>
-                        }
                     </tbody>
                     <tfoot>
                         <tr>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -165,20 +135,73 @@
     <script>
 
         const dtConfig = {
-            '#driver-table': {},
-            '#vehicle-table': {},
+            '#driver-table': {
+                columns: [
+                    { "data": "IDDriver" },
+                    { "data": "FirstName" },
+                    { "data": "LastName" },
+                    { "data": "DriversLicence" },
+                ],
+                getAllUrl: '@Url.Action("GetAllDrivers", "SqlConnection")',
+                getUrl: '@Url.Action("GetDriverForm", "SqlConnection")',
+                createUrl: '@Url.Action("InsertDriver", "SqlConnection")',
+                updateUrl: '@Url.Action("UpdateDriver", "SqlConnection")',
+                deleteUrl: '@Url.Action("DeleteDriver", "SqlConnection")'
+            },
+            '#vehicle-table': {
+                columns: [
+                    { "data": "IDVehicle" },
+                    { "data": "Model" },
+                    { "data": "Registration" },
+                    { "data": "Type" },
+                    { "data": "YearManufactured" },
+                    { "data": "InitialKilometres" },
+                    { "data": "IsAvailable" },
+                ],
+                getAllUrl: '@Url.Action("GetAllVehicles", "SqlConnection")',
+                getUrl: '@Url.Action("GetVehicleForm", "SqlConnection")',
+                createUrl: '@Url.Action("InsertVehicle", "SqlConnection")',
+                updateUrl: '@Url.Action("UpdateVehicle", "SqlConnection")',
+                deleteUrl: '@Url.Action("DeleteVehicle", "SqlConnection")'
+            },
             '#travel-order-table': {
+                columns: [
+                    { "data": "IDTravelOrder" },
+                    { "data": "DriverID" },
+                    { "data": "VehicleID" },
+                    { "data": "TravelOrderTypeID" },
+                    { "data": "ExpectedNumberOfDays" },
+                    { "data": "ReasonForTravel" },
+                    { "data": "CityStartId" },
+                    { "data": "CityEndId" },
+                    {
+                        "data": "DocumentDate",
+                        render: function (data, type, full, meta) {
+                            return getHtmlDateForDataTable(data);
+                        }
+                    },
+                    { "data": "TotalCost" },
+                ],
+                getAllUrl: '@Url.Action("GetAllTravelOrders", "SqlConnection")',
                 getUrl: '@Url.Action("GetTravelOrderForm", "SqlConnection")',
-                createUrl: '@Url.Action("InsertTravelOrderForm", "SqlConnection")',
-                updateUrl: '@Url.Action("UpdateTravelOrderForm", "SqlConnection")',
-                deleteUrl: '@Url.Action("DeleteTravelOrderForm", "SqlConnection")'
+                createUrl: '@Url.Action("InsertTravelOrder", "SqlConnection")',
+                updateUrl: '@Url.Action("UpdateTravelOrder", "SqlConnection")',
+                deleteUrl: '@Url.Action("DeleteTravelOrder", "SqlConnection")'
             }
-        }
+        };
+
+        $('#modal-form').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+
+        $('#modal-form').modal('hide');
 
         initDataTable(dtConfig);
 
         function initDataTable(options) {
             for (var selector in options) {
+                debugger;
                 var table = $(selector).DataTable({
                     dom: 'Bfrtip',
                     buttons: [
@@ -199,7 +222,8 @@
                         {
                             text: 'Edit',
                             action: function (e, dt, node, config) {
-                                showEditForm();
+                                var data = table.rows({ selected: true }).data()[0];
+                                showUpdateForm(data[0]);
                             }
                         },
                         {
@@ -209,7 +233,19 @@
                             }
                         },
                     ],
-                    select: true
+                    select: true,
+                    ajax: {
+                        url: options[selector].getAllUrl,
+                        method: 'GET'
+                    },
+                    columns: options[selector].columns,
+                    columnDefs: [
+                        {
+                            "targets": [ 0 ],
+                            "visible": false,
+                            "searchable": false
+                        }
+                    ],
                 });
 
                 table.columns().flatten().each(function (colIdx) {
@@ -272,7 +308,38 @@
                     $('<button/>')
                         .text('Create')
                         .addClass('btn btn-primary')
-                        .on('click', e => makeAjaxRequest(insertUrl, 'POST', {model: $('.modal-body').find('form').serializeObject()}))
+                        .on('click', e => {
+                            makeAjaxRequest(insertUrl, 'POST', { model: $('.modal-body').find('form').serializeObject() });
+                             $('#modal-form').modal('hide');
+                        })
+                        .appendTo($('.modal-footer'));
+
+                    $('#modal-form').modal('show');
+                }
+            })
+        }
+
+        function showUpdateForm(id, updateUrl) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetTravelOrderForm", "SqlConnection")',
+                data: { id: id },
+                dataType: 'html',
+                success: function (response) {
+                    $('.modal-title').text('Update');
+                    $('.modal-body').html(response);
+                    $('.modal-footer').find('.btn-primary').remove();
+
+                    $('<button/>')
+                        .text('Update')
+                        .addClass('btn btn-primary')
+                        .on('click', e => {
+                            makeAjaxRequest(insertUrl, 'PATCH', {
+                                model: $('.modal-body').find('form').serializeObject()
+                            });
+
+                            $('#modal-form').modal('hide');
+                        })
                         .appendTo($('.modal-footer'));
 
                     $('#modal-form').modal('show');
@@ -286,10 +353,37 @@
                 url: url,
                 contentType: 'application/json',
                 data: JSON.stringify(data),
+                dataType:'json',
                 success: function (response) {
-
+                    if (response.success) {
+                        alertify.success('Operation was successful');
+                    } else {
+                        alertify.error('Operation has failed!');
+                    }
                 }
             });
+        }
+
+        function getHtmlDateForDataTable(dateJson) {
+            const dateLocale = "nb-NO";
+            if (dateJson == null) {
+                return "";
+            }
+
+            const date = new Date(parseInt(dateJson.substr(6)));
+            const yyyyMMdd = date.toISOString().replace(/-/g, '').split('T')[0];
+
+            const spanTag =
+                $('<span/>')
+                    .text(yyyyMMdd)
+                    .hide();
+
+            const container =
+                $('<div/>')
+                    .append(spanTag)
+                    .append(date.toLocaleDateString(dateLocale));
+
+            return container.html();
         }
 
         $.fn.serializeObject = function() {
@@ -306,6 +400,13 @@
                 }
             });
             return o;
+        };
+
+        $.fn.removeClassStartingWith = function (filter) {
+            $(this).removeClass(function (index, className) {
+                return (className.match(new RegExp("\\S*" + filter + "\\S*", 'g')) || []).join(' ')
+            });
+            return this;
         };
 
     </script>

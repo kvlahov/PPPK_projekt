@@ -14,9 +14,9 @@ namespace PPPK.DAL.Implementations.SqlConnections
         {
         }
 
-        protected override void DeleteCommandParameters(TravelOrderType entity, SqlCommand cmd)
+        protected override void DeleteCommandParameters(long id, SqlCommand cmd)
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override IEnumerable<TravelOrderType> GetAllEntitiesFromReader(SqlCommand cmd)
@@ -72,7 +72,7 @@ namespace PPPK.DAL.Implementations.SqlConnections
 
         protected override void UpdateCommandParameters(TravelOrderType entity, SqlCommand cmd)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

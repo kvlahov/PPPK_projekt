@@ -15,9 +15,9 @@ namespace PPPK.DAL.Implementations.SqlConnections
         {
         }
 
-        protected override void DeleteCommandParameters(Driver entity, SqlCommand cmd)
+        protected override void DeleteCommandParameters(long id, SqlCommand cmd)
         {
-            cmd.CommandText = $"delete from Driver where IDDriver = {entity.IDDriver}";
+            cmd.CommandText = $"delete from Driver where IDDriver = {id}";
             cmd.CommandType = CommandType.Text;
         }
 

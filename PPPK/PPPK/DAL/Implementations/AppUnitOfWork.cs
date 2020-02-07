@@ -12,7 +12,7 @@ namespace PPPK.DAL.Implementations
 {
     public class AppUnitOfWork : IUnitOfWork, IDisposable
     {
-        private SqlConnection _connection;
+        private readonly SqlConnection _connection;
         private SqlTransaction _transaction;
 
         public IDriverRepository DriverRepository { get; private set; }
@@ -28,14 +28,14 @@ namespace PPPK.DAL.Implementations
         {
             string connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
 
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
+            _connection = new SqlConnection(connectionString);
+            _connection.Open();
 
-            DriverRepository = new DriverRepository(connection);
-            VehicleRepository = new VehicleRepository(connection);
-            CityRepository = new CityRepository(connection);
-            TravelOrderRepository = new TravelOrderRepository(connection);
-            TravelOrderTypeRepository = new TravelOrderTypeRepository(connection);
+            DriverRepository = new DriverRepository(_connection);
+            VehicleRepository = new VehicleRepository(_connection);
+            CityRepository = new CityRepository(_connection);
+            TravelOrderRepository = new TravelOrderRepository(_connection);
+            TravelOrderTypeRepository = new TravelOrderTypeRepository(_connection);
         }
 
         public void BeginTransaction()
@@ -43,7 +43,7 @@ namespace PPPK.DAL.Implementations
             _transaction = _connection.BeginTransaction();
         }
 
-        public void CommitTranasction()
+        public void CommitTransaction()
         {
             _transaction.Commit();
         }
