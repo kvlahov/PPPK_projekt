@@ -146,6 +146,7 @@
     <Compile Include="Models\TravelOrderType.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DataSetService.cs" />
     <Compile Include="Services\SqlConnectionService.cs" />
     <Compile Include="ViewModels\DriverViewModel.cs" />
     <Compile Include="ViewModels\SqlConnectionViewModel.cs" />
