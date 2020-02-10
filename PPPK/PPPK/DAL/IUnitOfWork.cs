@@ -15,6 +15,7 @@ namespace PPPK.DAL
         ICityRepository CityRepository { get; }
         ITravelOrderRepository TravelOrderRepository { get; }
         IRepository<TravelOrderType> TravelOrderTypeRepository { get; }
+        IRepository<RouteInfo> RouteInfoRepository { get; }
 
         void BeginTransaction();
         void CommitTransaction();

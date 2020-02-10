@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using PPPK.DAL.Implementations.DAAB;
 using PPPK.DAL.Implementations.SqlConnections;
 using PPPK.DAL.Interfaces.SqlConnections;
 using PPPK.Models;
@@ -24,6 +25,8 @@ namespace PPPK.DAL.Implementations
         public ITravelOrderRepository TravelOrderRepository{ get; private set; }
         public IRepository<TravelOrderType> TravelOrderTypeRepository { get; private set; }
 
+        public IRepository<RouteInfo> RouteInfoRepository { get; private set; }
+
         public AppUnitOfWork()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
@@ -36,6 +39,7 @@ namespace PPPK.DAL.Implementations
             CityRepository = new CityRepository(Connection);
             TravelOrderRepository = new TravelOrderRepository(Connection);
             TravelOrderTypeRepository = new TravelOrderTypeRepository(Connection);
+            RouteInfoRepository = new DaabRepository(connectionString);
         }
 
         public void BeginTransaction()

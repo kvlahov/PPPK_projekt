@@ -150,3 +150,7 @@ C:\Users\evlakre\Documents\PPPK_projekt\PPPK\PPPK\obj\Debug\PPPK.csproj.CoreComp
 C:\Users\evlakre\Documents\PPPK_projekt\PPPK\PPPK\obj\Debug\PPPK.csproj.CopyComplete
 C:\Users\evlakre\Documents\PPPK_projekt\PPPK\PPPK\obj\Debug\PPPK.dll
 C:\Users\evlakre\Documents\PPPK_projekt\PPPK\PPPK\obj\Debug\PPPK.pdb
+C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\Microsoft.Practices.EnterpriseLibrary.Common.xml
+C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\Microsoft.Practices.EnterpriseLibrary.Data.xml

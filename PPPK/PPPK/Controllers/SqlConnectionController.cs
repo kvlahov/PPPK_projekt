@@ -15,6 +15,9 @@ namespace PPPK.Controllers
         public SqlConnectionController()
         {
             _service = new SqlConnectionService();
+            var a = new XmlService();
+            //a.CreateBackup();
+            a.ImportBackup();
         }
         public ActionResult Index()
         {

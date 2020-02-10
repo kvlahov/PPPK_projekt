@@ -12,5 +12,6 @@ namespace PPPK.Models
         public double Amount { get; set; }
         public double Price { get; set; }
         public DateTime DatePurchased { get; set; }
+        public long TravelOrderID { get; set; }
     }
 }
