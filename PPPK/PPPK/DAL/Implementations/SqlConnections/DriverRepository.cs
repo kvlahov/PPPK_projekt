@@ -72,9 +72,9 @@ namespace PPPK.DAL.Implementations.SqlConnections
         }
 
         protected override void InsertCommandParameters(Driver entity, SqlCommand cmd, out SqlParameter newId)
-        {
+        {            
             cmd.CommandText = $"insert into Driver({nameof(entity.FirstName)}, {nameof(entity.LastName)}, {nameof(entity.DriversLicence)})" +
-                $" values ({entity.FirstName},{entity.LastName},{entity.DriversLicence}); " +
+                $" values ('{entity.FirstName}','{entity.LastName}','{entity.DriversLicence}'); " +
                 $" set @newId = scope_identity();";
             cmd.CommandType = CommandType.Text;
             newId = new SqlParameter("@newId", SqlDbType.Int)
@@ -87,9 +87,9 @@ namespace PPPK.DAL.Implementations.SqlConnections
         protected override void UpdateCommandParameters(Driver entity, SqlCommand cmd)
         {
             cmd.CommandText = $"update Driver set " +
-                $"{nameof(entity.FirstName)} = {entity.FirstName}, " +
-                $"{nameof(entity.LastName)} = {entity.LastName}, " +
-                $"{nameof(entity.DriversLicence)} = {entity.DriversLicence} " +
+                $"{nameof(entity.FirstName)} = '{entity.FirstName}', " +
+                $"{nameof(entity.LastName)} = '{entity.LastName}', " +
+                $"{nameof(entity.DriversLicence)} = '{entity.DriversLicence}' " +
                 $"where {nameof(entity.IDDriver)} = {entity.IDDriver}";
 
             cmd.CommandType = CommandType.Text;

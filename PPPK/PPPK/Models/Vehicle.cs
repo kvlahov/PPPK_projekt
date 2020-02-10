@@ -13,7 +13,7 @@ namespace PPPK.Models
         public string Model { get; set; }
         public int YearManufactured { get; set; }
         public double InitialKilometres { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool IsAvailable { get; set; } = true;
 
     }
 }

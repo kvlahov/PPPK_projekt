@@ -31,7 +31,7 @@ namespace PPPK.Controllers
         public ActionResult GetTravelOrderForm(long? id)
         {
             var viewModel = _service.GetTravelOrderViewModel(id);
-            return PartialView("_InsertTravelOrder", viewModel);
+            return PartialView("_TravelOrderForm", viewModel);
         }
 
         [HttpPost]
@@ -65,28 +65,28 @@ namespace PPPK.Controllers
         [HttpGet]
         public ActionResult GetDriverForm(long? id)
         {
-            return null;
-            //return PartialView("_InsertTravelOrder", viewModel);
+            var vm = id.HasValue ? _service.GetDriver(id.Value) : new Driver();
+            return PartialView("_DriverForm", vm);
         }
 
         [HttpPost]
         public ActionResult InsertDriver(Driver model)
         {
-            var success = false;
+            var success = _service.InsertDriver(model);
             return Json(new { success });
         }
 
         [HttpPatch]
         public ActionResult UpdateDriver(Driver model)
         {
-            var success = false;
+            var success = _service.UpdateDriver(model); ;
             return Json(new { success });
         }
 
         [HttpDelete]
         public ActionResult DeleteDriver(long id)
         {
-            var success = false;
+            var success = _service.DeleteDriver(id); ;
             return Json(new { success });
         }
 
@@ -101,28 +101,29 @@ namespace PPPK.Controllers
         [HttpGet]
         public ActionResult GetVehicleForm(long? id)
         {
-            return null;
-            //return PartialView("_InsertTravelOrder", viewModel);
+            var vm = id.HasValue ? _service.GetVehicle(id.Value) : new Vehicle();
+            return PartialView("_VehicleForm", vm);
+
         }
 
         [HttpPost]
         public ActionResult InsertVehicle(Vehicle model)
         {
-            var success = false;
+            var success = _service.InsertVehicle(model);
             return Json(new { success });
         }
 
         [HttpPatch]
         public ActionResult UpdateVehicle(Vehicle model)
         {
-            var success = false;
+            var success = _service.UpdateVehicle(model);
             return Json(new { success });
         }
 
         [HttpDelete]
         public ActionResult DeleteVehicle(long id)
         {
-            var success = false;
+            var success = _service.DeleteVehicle(id);
             return Json(new { success });
         }
     }

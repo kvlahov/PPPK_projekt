@@ -1,18 +1,12 @@
 ﻿@model PPPK.ViewModels.TravelOrderViewModel
 
-@{
-    ViewBag.Title = "InsertTravelOrder";
-}
-
-<h2>InsertTravelOrder</h2>
+<h2>Travel Order</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal container">
-        <h4>Travel Order basic info</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @Html.HiddenFor(model => model.TravelOrder.IDTravelOrder)
@@ -74,14 +68,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TravelOrder.TotalCost, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TravelOrder.TotalCost, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TravelOrder.DocumentDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TravelOrder.DocumentDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TravelOrder.DocumentDate, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>

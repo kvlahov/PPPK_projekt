@@ -15,7 +15,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Modal Header</h4>
             </div>
-            <div class="modal-body" style="overflow:hidden;">
+            <div class="modal-body container" style="overflow:hidden;">
 
             </div>
             <div class="modal-footer">
@@ -37,7 +37,7 @@
         <div id="drivers" class="tab-pane fade in active">
             <h3>Drivers</h3>
             <div>
-                <table class="table table-condensed table-hover" id="driver-table">
+                <table class="table table-condensed table-hover" id="driver-table" style="width:100%">
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -63,7 +63,7 @@
         <div id="vehicles" class="tab-pane fade">
             <h3>Vehicles</h3>
             <div>
-                <table class="table table-condensed table-hover" id="vehicle-table">
+                <table class="table table-condensed table-hover" id="vehicle-table" style="width:100%">
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -94,7 +94,7 @@
         <div id="travel-orders" class="tab-pane fade">
             <h3>Travel orders</h3>
             <div>
-                <table class="table table-condensed table-hover" id="travel-order-table">
+                <table class="table table-condensed table-hover" id="travel-order-table" style="width:100%">
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -134,6 +134,8 @@
 @section scripts {
     <script>
 
+        $('.datepicker').datepicker();
+
         const dtConfig = {
             '#driver-table': {
                 columns: [
@@ -152,9 +154,9 @@
                 columns: [
                     { "data": "IDVehicle" },
                     { "data": "Model" },
-                    { "data": "Registration" },
                     { "data": "Type" },
                     { "data": "YearManufactured" },
+                    { "data": "Registration" },
                     { "data": "InitialKilometres" },
                     { "data": "IsAvailable" },
                 ],
@@ -197,13 +199,19 @@
 
         $('#modal-form').modal('hide');
 
+        $('a[data-toggle="tab"]').on( 'shown.bs.tab', function (e) {
+                $($.fn.dataTable.tables( true ) ).DataTable().columns.adjust();
+        });
+
         initDataTable(dtConfig);
 
         function initDataTable(options) {
-            for (var selector in options) {
-                debugger;
-                var table = $(selector).DataTable({
+            for (let selector in options) {
+                const table = $(selector).DataTable({
                     dom: 'Bfrtip',
+                    scrollX: true,
+                    deferRender: true,
+                    autoWidth: true,
                     buttons: [
                         {
                             text: 'Clear search',
@@ -216,20 +224,25 @@
                         {
                             text: 'New',
                             action: function (e, dt, node, config) {
-                                showInsertForm(options[selector].createUrl);
+                                showInsertForm(options[selector].getUrl, options[selector].createUrl);
                             }
                         },
                         {
                             text: 'Edit',
                             action: function (e, dt, node, config) {
-                                var data = table.rows({ selected: true }).data()[0];
-                                showUpdateForm(data[0]);
+                                const id = getSelectedItemId(dt);
+                                if (id != -1) {
+                                    showUpdateForm(options[selector].getUrl, id, options[selector].updateUrl);
+                                }
                             }
                         },
                         {
                             text: 'Delete',
                             action: function (e, dt, node, config) {
-                                deleteEntity();
+                                const id = getSelectedItemId(dt);
+                                if (id != -1) {
+                                    deleteEntity(options[selector].deleteUrl, id);
+                                }
                             }
                         },
                     ],
@@ -281,6 +294,16 @@
             }
         }
 
+        function getSelectedItemId(table) {
+            const data = table.rows({ selected: true }).data()[0];
+            if (!data) {
+                alertify.alert('Select item', 'Please select an item')
+                return -1;
+            }
+            const idKey = Object.keys(data)[0];
+            return data[idKey];
+        }
+
         function appendFilterOptions(table, colIdx, select) {
             table
                 .column(colIdx, { search: 'applied' })
@@ -294,11 +317,11 @@
             select.prepend("<option value='' selected>-</option>");
         }
 
-        function showInsertForm(insertUrl) {
+        function showInsertForm(getFormUrl, insertUrl) {
 
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetTravelOrderForm", "SqlConnection")',
+                url: getFormUrl,
                 dataType: 'html',
                 success: function (response) {
                     $('.modal-title').text('Create');
@@ -319,10 +342,10 @@
             })
         }
 
-        function showUpdateForm(id, updateUrl) {
+        function showUpdateForm(getUrl, id, updateUrl) {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetTravelOrderForm", "SqlConnection")',
+                url: getUrl,
                 data: { id: id },
                 dataType: 'html',
                 success: function (response) {
@@ -334,7 +357,7 @@
                         .text('Update')
                         .addClass('btn btn-primary')
                         .on('click', e => {
-                            makeAjaxRequest(insertUrl, 'PATCH', {
+                            makeAjaxRequest(updateUrl, 'PATCH', {
                                 model: $('.modal-body').find('form').serializeObject()
                             });
 
@@ -347,6 +370,12 @@
             })
         }
 
+        function deleteEntity(deleteUrl, id) {
+            alertify.confirm("Delete", "Are you sure you want to delete this record?", () => {
+                makeAjaxRequest(deleteUrl, 'delete', {id: id} )
+            }, () => { });
+        }
+
         function makeAjaxRequest(url, method, data) {
             $.ajax({
                 type: method,
@@ -355,8 +384,10 @@
                 data: JSON.stringify(data),
                 dataType:'json',
                 success: function (response) {
+                    alertify.set('notifier','position', 'top-center');
                     if (response.success) {
                         alertify.success('Operation was successful');
+                        $($.fn.dataTable.tables(true)).DataTable().ajax.reload();
                     } else {
                         alertify.error('Operation has failed!');
                     }
