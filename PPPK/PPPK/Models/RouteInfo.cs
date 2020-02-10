@@ -17,5 +17,6 @@ namespace PPPK.Models
         public double DistanceInKm { get; set; }
         public double AverageSpeed { get; set; }
         public double FuelExpense { get; set; }
+        public long TravelOrderID { get; set; }
     }
 }
