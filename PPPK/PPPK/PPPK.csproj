@@ -134,7 +134,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DataSetController.cs" />
+    <Compile Include="Controllers\EntityController.cs" />
     <Compile Include="Controllers\SqlConnectionController.cs" />
+    <Compile Include="DAL\ApplicationContext.cs" />
     <Compile Include="DAL\Implementations\AppUnitOfWork.cs" />
     <Compile Include="DAL\Implementations\DAAB\DaabRepository.cs" />
     <Compile Include="DAL\Implementations\Entity\EntityRepository.cs" />
@@ -150,6 +153,7 @@
     <Compile Include="DAL\Interfaces\SqlConnections\IVehicleRepository.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\IUnitOfWork.cs" />
+    <Compile Include="Enums\RepoMode.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -163,6 +167,7 @@
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataSetService.cs" />
+    <Compile Include="Services\EntityService.cs" />
     <Compile Include="Services\SqlConnectionService.cs" />
     <Compile Include="Services\XmlService.cs" />
     <Compile Include="ViewModels\DriverViewModel.cs" />
@@ -307,9 +312,12 @@
     <Content Include="Views\SqlConnection\_TravelOrderForm.cshtml" />
     <Content Include="Views\SqlConnection\_DriverForm.cshtml" />
     <Content Include="Views\SqlConnection\_VehicleForm.cshtml" />
+    <Content Include="Views\Entity\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DAL\Interfaces\Entity\" />
+    <Folder Include="Views\DataSet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

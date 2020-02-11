@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using PPPK.DAL.Implementations.DAAB;
+using PPPK.DAL.Implementations.Entity;
 using PPPK.DAL.Implementations.SqlConnections;
 using PPPK.DAL.Interfaces.SqlConnections;
+using PPPK.Enums;
 using PPPK.Models;
 
 namespace PPPK.DAL.Implementations
@@ -15,31 +18,61 @@ namespace PPPK.DAL.Implementations
     {
         public SqlConnection Connection { get; private set; }
         private SqlTransaction _transaction;
+        string _connectionString;
+        ApplicationContext _context;
 
-        public IDriverRepository DriverRepository { get; private set; }
+        public IRepository<Driver> DriverRepository { get; private set; }
 
-        public IVehicleRepository VehicleRepository { get; private set; }
+        public IRepository<Vehicle> VehicleRepository { get; private set; }
 
-        public ICityRepository CityRepository { get; private set; }
+        public IRepository<City> CityRepository { get; private set; }
 
-        public ITravelOrderRepository TravelOrderRepository{ get; private set; }
+        public IRepository<TravelOrder> TravelOrderRepository { get; private set; }
         public IRepository<TravelOrderType> TravelOrderTypeRepository { get; private set; }
 
         public IRepository<RouteInfo> RouteInfoRepository { get; private set; }
 
-        public AppUnitOfWork()
+        public IRepository<ServiceInfo> ServiceInfoRepository { get; private set; }
+
+        public IRepository<FuelInfo> FuelInfoRepository { get; private set; }
+
+        public AppUnitOfWork() : this(RepoMode.Mixed)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+        }
 
-            Connection = new SqlConnection(connectionString);
-            Connection.Open();
+        public AppUnitOfWork(RepoMode mode)
+        {
+            _connectionString = ConfigurationManager.ConnectionStrings["cs"].ConnectionString;
+            _context = new ApplicationContext();
 
-            DriverRepository = new DriverRepository(Connection);
-            VehicleRepository = new VehicleRepository(Connection);
-            CityRepository = new CityRepository(Connection);
-            TravelOrderRepository = new TravelOrderRepository(Connection);
-            TravelOrderTypeRepository = new TravelOrderTypeRepository(Connection);
-            RouteInfoRepository = new DaabRepository(connectionString);
+            if (mode == RepoMode.Entity)
+            {
+
+                DriverRepository = new EntityRepository<Driver>(_context);
+                VehicleRepository = new EntityRepository<Vehicle>(_context);
+                CityRepository = new EntityRepository<City>(_context);
+                TravelOrderRepository = new EntityRepository<TravelOrder>(_context);
+                TravelOrderTypeRepository = new EntityRepository<TravelOrderType>(_context);
+                RouteInfoRepository = new EntityRepository<RouteInfo>(_context);
+
+                ServiceInfoRepository = new EntityRepository<ServiceInfo>(_context);
+                FuelInfoRepository = new EntityRepository<FuelInfo>(_context);
+            }
+            else
+            {
+                Connection = new SqlConnection(_connectionString);
+                Connection.Open();
+
+                DriverRepository = new DriverRepository(Connection);
+                VehicleRepository = new VehicleRepository(Connection);
+                CityRepository = new CityRepository(Connection);
+                TravelOrderRepository = new TravelOrderRepository(Connection);
+                TravelOrderTypeRepository = new TravelOrderTypeRepository(Connection);
+
+                RouteInfoRepository = new DaabRepository(_connectionString);
+                ServiceInfoRepository = new EntityRepository<ServiceInfo>(_context);
+                FuelInfoRepository = new EntityRepository<FuelInfo>(_context);
+            }
         }
 
         public void BeginTransaction()
@@ -55,6 +88,11 @@ namespace PPPK.DAL.Implementations
         public void RollbackTransaction()
         {
             _transaction.Rollback();
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
 
         #region IDisposable Support
@@ -75,7 +113,7 @@ namespace PPPK.DAL.Implementations
 
         public void Dispose()
         {
-            Dispose(true);            
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
         #endregion

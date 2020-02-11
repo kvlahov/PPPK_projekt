@@ -88,7 +88,10 @@ namespace PPPK.Services
                 {
                     xmlWriter.WriteStartElement(entry.Key);
                     //add each property
-                    Type.GetType("PPPK.Models." + entry.Key).GetProperties().ToList().ForEach(p => {
+                    Type.GetType("PPPK.Models." + entry.Key).GetProperties()
+                        .Where(p => !p.GetGetMethod().IsVirtual)
+                        .ToList()
+                        .ForEach(p => {
                         xmlWriter.WriteElementString(p.Name, row[p.Name].ToString());
                     });
                     xmlWriter.WriteEndElement();

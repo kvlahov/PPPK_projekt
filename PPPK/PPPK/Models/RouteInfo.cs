@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +9,7 @@ namespace PPPK.Models
 {
     public class RouteInfo
     {
+        [Key]
         public long IDRouteInfo { get; set; }
         public DateTime DateTimeStart { get; set; }
         public DateTime DateTimeEnd { get; set; }
@@ -18,5 +21,7 @@ namespace PPPK.Models
         public double AverageSpeed { get; set; }
         public double FuelExpense { get; set; }
         public long TravelOrderID { get; set; }
+        [ForeignKey("TravelOrderID")]
+        public virtual TravelOrder TravelOrder { get; set; }
     }
 }

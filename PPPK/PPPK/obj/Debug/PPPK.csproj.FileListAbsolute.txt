@@ -154,3 +154,7 @@ C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\Microsoft.Practices.Ent
 C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll
 C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\Microsoft.Practices.EnterpriseLibrary.Common.xml
 C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\Microsoft.Practices.EnterpriseLibrary.Data.xml
+C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\EntityFramework.dll
+C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\EntityFramework.SqlServer.dll
+C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\EntityFramework.xml
+C:\Users\lordo\Documents\PPPK\PPPK_projekt\PPPK\PPPK\bin\EntityFramework.SqlServer.xml
