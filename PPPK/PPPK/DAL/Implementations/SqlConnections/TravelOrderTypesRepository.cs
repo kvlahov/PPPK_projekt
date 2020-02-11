@@ -41,7 +41,7 @@ namespace PPPK.DAL.Implementations.SqlConnections
         {
             return new TravelOrderType
             {
-                IDTravelOrderType = Convert.ToInt64(reader[nameof(type.IDTravelOrderType)].ToString()),
+                IDTravelOrderType = Convert.ToInt32(reader[nameof(type.IDTravelOrderType)].ToString()),
                 Type = reader[nameof(type.Type)].ToString()
             };
         }

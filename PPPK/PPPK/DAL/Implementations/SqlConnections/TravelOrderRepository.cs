@@ -66,10 +66,10 @@ namespace PPPK.DAL.Implementations.SqlConnections
         {
             return new TravelOrder
             {
-                IDTravelOrder = Convert.ToInt64(reader[nameof(type.IDTravelOrder)].ToString()),
-                DriverID = Convert.ToInt64(reader[nameof(type.DriverID)].ToString()),
-                VehicleID = Convert.ToInt64(reader[nameof(type.VehicleID)].ToString()),
-                TravelOrderTypeID = Convert.ToInt64(reader[nameof(type.TravelOrderTypeID)].ToString()),
+                IDTravelOrder = Convert.ToInt32(reader[nameof(type.IDTravelOrder)].ToString()),
+                DriverID = Convert.ToInt32(reader[nameof(type.DriverID)].ToString()),
+                VehicleID = Convert.ToInt32(reader[nameof(type.VehicleID)].ToString()),
+                TravelOrderTypeID = Convert.ToInt32(reader[nameof(type.TravelOrderTypeID)].ToString()),
                 ExpectedNumberOfDays = Convert.ToInt32(reader[nameof(type.ExpectedNumberOfDays)].ToString()),
                 ReasonForTravel = reader[nameof(type.ReasonForTravel)].ToString(),
                 CityStartId = Convert.ToInt32(reader[nameof(type.CityStartId)].ToString()),

@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace PPPK.Models
 {
+    [Table("TravelOrderType")]
     public class TravelOrderType
     {
         [Key]
-        public long IDTravelOrderType { get; set; }
+        public int IDTravelOrderType { get; set; }
+
+        [Required]
+        [StringLength(30)]
         public string Type { get; set; }
     }
 }

@@ -7,15 +7,23 @@ using System.Web;
 
 namespace PPPK.Models
 {
+    [Table("ServiceInfo")]
     public class ServiceInfo
     {
         [Key]
-        public long IDService { get; set; }
-        public long VehicleID { get; set; }
+        public int IDService { get; set; }
+
+        public int VehicleID { get; set; }
+
+        public DateTime? DatetimeService { get; set; }
+
+        [Column(TypeName = "money")]
+        public decimal? Cost { get; set; }
+
+        [StringLength(200)]
+        public string Description { get; set; }
+
         [ForeignKey("VehicleID")]
         public virtual Vehicle Vehicle { get; set; }
-        public DateTime DatetimeService { get; set; }
-        public double Cost { get; set; }
-        public string Description { get; set; }
     }
 }

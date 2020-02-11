@@ -8,9 +8,9 @@ namespace PPPK.DAL.Implementations.Entity
 {
     public class EntityRepository<T> : IRepository<T> where T : class
     {
-        private DbContext context;
+        private ApplicationContext context;
         private DbSet<T> dbSet;
-        public EntityRepository(DbContext context)
+        public EntityRepository(ApplicationContext context)
         {
             this.context = context;
             dbSet = context.Set<T>();

@@ -65,11 +65,11 @@ namespace PPPK.DAL.Implementations.SqlConnections
         {
             return new Vehicle
             {
-                IDVehicle = Convert.ToInt64(reader[nameof(type.IDVehicle)].ToString()),
+                IDVehicle = Convert.ToInt32(reader[nameof(type.IDVehicle)].ToString()),
                 Model = reader[nameof(type.Model)].ToString(),
                 Registration = reader[nameof(type.Registration)].ToString(),
                 Type = reader[nameof(type.Type)].ToString(),
-                YearManufactured = Convert.ToInt32(reader[nameof(type.YearManufactured)].ToString()),
+                YearManufactured = Convert.ToInt16(reader[nameof(type.YearManufactured)].ToString()),
                 InitialKilometres = Convert.ToDouble(reader[nameof(type.InitialKilometres)].ToString()),
                 IsAvailable = Convert.ToBoolean(reader[nameof(type.IsAvailable)].ToString())
             };

@@ -19,9 +19,13 @@ namespace PPPK.Services
 
         public IEnumerable<ServiceInfo> GetServices(long vehicleID)
         {
+            using (var context = new ApplicationContext())
+            {
+                var cities = context.Cities.ToList();
+                var vehicles = context.Vehicles.ToList();
+            }
             var vehicle = unitOfWork.VehicleRepository.GetById(vehicleID);
-            var vehicles = unitOfWork.VehicleRepository.GetAll().ToList();
-            var services = unitOfWork.ServiceInfoRepository.GetAll().ToList();
+            
             //var si = vehicle.ServiceInfos;
 
             return null;
