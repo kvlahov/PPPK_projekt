@@ -867,3 +867,100 @@ begin
 	delete from TravelOrder
 	where IDTravelOrder = @IDTravelOrder;
 end
+go
+
+create procedure getAllRouteInfoes
+as
+begin
+	select * from RouteInfo
+end
+go
+
+create procedure getRouteInfo
+	@IDRouteInfo int
+as
+begin
+	select * 
+	from RouteInfo
+	where IDRouteInfo = @IDRouteInfo
+end
+go
+
+create procedure insertRouteInfo
+	@DateTimeStart datetime,
+	@DateTimeEnd datetime,
+	@LatitudeStart float,
+	@LongitudeStart float,
+	@LatitudeEnd float,
+	@LongitudeEnd float,
+	@DistanceInKm float,
+	@AverageSpeed float,
+	@FuelExpense float,
+	@TravelOrderID int
+as
+begin
+	insert into RouteInfo
+	(
+		DateTimeStart,
+		DateTimeEnd,
+		LatitudeStart,
+		LongitudeStart,
+		LatitudeEnd,
+		LongitudeEnd, 
+		DistanceInKm,
+		AverageSpeed,
+		FuelExpense,
+		TravelOrderID
+	)
+	values
+	(
+		@DateTimeStart,
+		@DateTimeEnd,
+		@LatitudeStart,
+		@LongitudeStart,
+		@LatitudeEnd,
+		@LongitudeEnd,
+		@DistanceInKm,
+		@AverageSpeed,
+		@FuelExpense,
+		@TravelOrderID
+	)
+end
+go
+create procedure updateRouteInfo
+	@IDRouteInfo int,
+	@DateTimeStart datetime,
+	@DateTimeEnd datetime,
+	@LatitudeStart float,
+	@LongitudeStart float,
+	@LatitudeEnd float,
+	@LongitudeEnd float,
+	@DistanceInKm float,
+	@AverageSpeed float,
+	@FuelExpense float,
+	@TravelOrderID int
+as
+begin
+	update RouteInfo
+	set
+		DateTimeStart = @DateTimeStart,
+		DateTimeEnd = @DateTimeEnd,
+		LatitudeStart = @LatitudeStart,
+		LongitudeStart = @LongitudeStart,
+		LatitudeEnd = @LatitudeEnd,
+		LongitudeEnd = @LongitudeEnd,
+		DistanceInKm = @DistanceInKm,
+		AverageSpeed = @AverageSpeed,
+		FuelExpense = @FuelExpense,
+		TravelOrderID = @TravelOrderID
+	where IDRouteInfo = @IDRouteInfo
+end
+go
+
+create procedure deleteRouteInfo
+	@IDRouteInfo int
+as
+begin
+	delete from RouteInfo
+	where IDRouteInfo = @IDRouteInfo
+end
