@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PPPK.Models.ServiceInfo>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-condensed table-hover" id="services-table" style="width:100%">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DatetimeService)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatetimeService)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IDService }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IDService }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IDService })
+            </td>
+        </tr>
+    }
+
+</table>

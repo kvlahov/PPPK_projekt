@@ -40,5 +40,6 @@ namespace PPPK.Models
         [Column(TypeName = "money")]
         public decimal? TotalCost { get; set; }
         public DateTime? DocumentDate { get; set; }
+        public virtual ICollection<RouteInfo> RouteInfos { get; set; }
     }
 }

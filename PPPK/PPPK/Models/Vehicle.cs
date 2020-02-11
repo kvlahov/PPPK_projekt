@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace PPPK.Models
 {
@@ -30,6 +31,9 @@ namespace PPPK.Models
         public double InitialKilometres { get; set; }
 
         public bool IsAvailable { get; set; }
+        [ScriptIgnore(ApplyToOverrides = true)]
         public virtual ICollection<ServiceInfo> ServiceInfos { get; set; }
+        [ScriptIgnore(ApplyToOverrides = true)]
+        public virtual ICollection<TravelOrder> TravelOrders { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using PPPK.Services;
+﻿using PPPK.Models;
+using PPPK.Services;
+using PPPK.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +16,47 @@ namespace PPPK.Controllers
         {
             service = new EntityService();
         }
-        // GET: Entity
+        
         public ActionResult Index()
         {
-            service.GetServices(1);
             return View();
+        }
+
+        public ActionResult GetVehicles()
+        {
+            List<Vehicle> vehicles = service.GetAllVehicles();
+            return Json(new { data = vehicles }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetServicesForVehicle(int id)
+        {
+            List<ServiceInfo> services = service.GetServicesForVehicle(id);
+            return PartialView("_ServiceInfoes", services);
+            //return Json(new { data = services }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult InsertService(ServiceInfo serviceInfo)
+        {
+            
+            return Json(new { success = service.InsertService(serviceInfo) });
+        }
+
+        [HttpPatch]
+        public ActionResult UpdateService(ServiceInfo serviceInfo)
+        {
+            return Json(new { success = service.UpdateService(serviceInfo) });
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteService(int id)
+        {
+            return Json(new { success = service.DeleteService(id) });
+        }
+
+        public ActionResult GenerateReportForVehicle(int id)
+        {
+            VehicleViewModel vm = service.GetVehicleViewModel(id);
+            return PartialView("_VehicleReport", vm);
         }
     }
 }

@@ -5,3 +5,95 @@
 
 <h2>Entity</h2>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <table class="table table-condensed table-hover" id="vehicle-table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Model</th>
+                        <th>Type</th>
+                        <th>Year manufactured</th>
+                        <th>Registration</th>
+                        <th>Initial km</th>
+                        <th>Available</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+        <div class="col-md-7" id="services">
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+        const vehicleColumns = [
+            { "data": "IDVehicle" },
+            { "data": "Model" },
+            { "data": "Type" },
+            { "data": "YearManufactured" },
+            { "data": "Registration" },
+            { "data": "InitialKilometres" },
+            { "data": "IsAvailable" },
+        ];
+
+        const serviceColumns = [
+            { "data": "IDService" },
+            {
+                "data": "DatetimeService",
+                render: function (data, type, full, meta) {
+                    return getHtmlDateForDataTable(data);
+                }
+            },
+            { "data": "Description" }
+        ];
+
+        const table = $('#vehicle-table').DataTable({
+            scrollX: true,
+            deferRender: true,
+            autoWidth: true,
+            select: true,
+            bFilter: false,
+            ajax: {
+                url: '@Url.Action("GetVehicles","Entity")',
+                method: 'GET'
+            },
+            columns: vehicleColumns,
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+        });
+
+        $('#vehicle-table').DataTable().on('select', function (e, dt, type, indexes) {
+            const id = getSelectedItemId(dt);
+            if (id != -1) {
+                $.ajax({
+                    url: '@Url.Action("GetServicesForVehicle", "Entity")',
+                    data: { id: id },
+                    dataType: 'html',
+                    success: function (response) {
+                        $('#services').html(response);
+                    }
+                });
+            } else {
+                $('#services').html('');
+            }
+        });
+
+        $('#vehicle-table').DataTable().on('deselect', function (e, dt, type, indexes) {
+                $('#services').html('');
+        });
+
+
+    </script>
+}

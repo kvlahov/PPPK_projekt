@@ -233,6 +233,8 @@
                                 const id = getSelectedItemId(dt);
                                 if (id != -1) {
                                     showUpdateForm(options[selector].getUrl, id, options[selector].updateUrl);
+                                } else {
+                                    alertify.alert('Select item', 'Please select an item');
                                 }
                             }
                         },
@@ -242,6 +244,8 @@
                                 const id = getSelectedItemId(dt);
                                 if (id != -1) {
                                     deleteEntity(options[selector].deleteUrl, id);
+                                } else {
+                                    alertify.alert('Select item', 'Please select an item');
                                 }
                             }
                         },
@@ -292,16 +296,6 @@
                     });
                 });
             }
-        }
-
-        function getSelectedItemId(table) {
-            const data = table.rows({ selected: true }).data()[0];
-            if (!data) {
-                alertify.alert('Select item', 'Please select an item')
-                return -1;
-            }
-            const idKey = Object.keys(data)[0];
-            return data[idKey];
         }
 
         function appendFilterOptions(table, colIdx, select) {
@@ -395,43 +389,43 @@
             });
         }
 
-        function getHtmlDateForDataTable(dateJson) {
-            const dateLocale = "nb-NO";
-            if (dateJson == null) {
-                return "";
-            }
+        //function getHtmlDateForDataTable(dateJson) {
+        //    const dateLocale = "nb-NO";
+        //    if (dateJson == null) {
+        //        return "";
+        //    }
 
-            const date = new Date(parseInt(dateJson.substr(6)));
-            const yyyyMMdd = date.toISOString().replace(/-/g, '').split('T')[0];
+        //    const date = new Date(parseInt(dateJson.substr(6)));
+        //    const yyyyMMdd = date.toISOString().replace(/-/g, '').split('T')[0];
 
-            const spanTag =
-                $('<span/>')
-                    .text(yyyyMMdd)
-                    .hide();
+        //    const spanTag =
+        //        $('<span/>')
+        //            .text(yyyyMMdd)
+        //            .hide();
 
-            const container =
-                $('<div/>')
-                    .append(spanTag)
-                    .append(date.toLocaleDateString(dateLocale));
+        //    const container =
+        //        $('<div/>')
+        //            .append(spanTag)
+        //            .append(date.toLocaleDateString(dateLocale));
 
-            return container.html();
-        }
+        //    return container.html();
+        //}
 
-        $.fn.serializeObject = function() {
-            var o = {};
-            var a = this.serializeArray();
-            $.each(a, function() {
-                if (o[this.name]) {
-                    if (!o[this.name].push) {
-                        o[this.name] = [o[this.name]];
-                    }
-                    o[this.name].push(this.value || '');
-                } else {
-                    o[this.name] = this.value || '';
-                }
-            });
-            return o;
-        };
+        //$.fn.serializeObject = function() {
+        //    var o = {};
+        //    var a = this.serializeArray();
+        //    $.each(a, function() {
+        //        if (o[this.name]) {
+        //            if (!o[this.name].push) {
+        //                o[this.name] = [o[this.name]];
+        //            }
+        //            o[this.name].push(this.value || '');
+        //        } else {
+        //            o[this.name] = this.value || '';
+        //        }
+        //    });
+        //    return o;
+        //};
 
         $.fn.removeClassStartingWith = function (filter) {
             $(this).removeClass(function (index, className) {
