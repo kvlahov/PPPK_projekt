@@ -1,0 +1,37 @@
+namespace TestEntity
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    [Table("RouteInfo")]
+    public partial class RouteInfo
+    {
+        [Key]
+        public int IDRouteInfo { get; set; }
+
+        public DateTime? DateTimeStart { get; set; }
+
+        public DateTime? DateTimeEnd { get; set; }
+
+        public double? LatitudeStart { get; set; }
+
+        public double? LongitudeStart { get; set; }
+
+        public double? LatitudeEnd { get; set; }
+
+        public double? LongitudeEnd { get; set; }
+
+        public double? DistanceInKm { get; set; }
+
+        public double? AverageSpeed { get; set; }
+
+        public double? FuelExpense { get; set; }
+
+        public int? TravelOrderID { get; set; }
+
+        public virtual TravelOrder TravelOrder { get; set; }
+    }
+}
