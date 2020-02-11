@@ -10,7 +10,7 @@ namespace PPPK.DAL
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext() : base("cs")
+        public ApplicationContext() : base("name=Entity")
         {
         }
 
