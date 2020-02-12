@@ -7,20 +7,21 @@ using System.Web;
 
 namespace PPPK.Models
 {
+    [Table("RouteInfo")]
     public class RouteInfo
     {
         [Key]
-        public long IDRouteInfo { get; set; }
-        public DateTime DateTimeStart { get; set; }
-        public DateTime DateTimeEnd { get; set; }
-        public double LatitudeStart { get; set; }
-        public double LongitudeStart { get; set; }
-        public double LatitudeEnd { get; set; }
-        public double LongitudeEnd { get; set; }
-        public double DistanceInKm { get; set; }
-        public double AverageSpeed { get; set; }
-        public double FuelExpense { get; set; }
-        public long TravelOrderID { get; set; }
+        public int IDRouteInfo { get; set; }
+        public DateTime? DateTimeStart { get; set; }
+        public DateTime? DateTimeEnd { get; set; }
+        public double? LatitudeStart { get; set; }
+        public double? LongitudeStart { get; set; }
+        public double? LatitudeEnd { get; set; }
+        public double? LongitudeEnd { get; set; }
+        public double? DistanceInKm { get; set; }
+        public double? AverageSpeed { get; set; }
+        public double? FuelExpense { get; set; }
+        public int? TravelOrderID { get; set; }
         [ForeignKey("TravelOrderID")]
         public virtual TravelOrder TravelOrder { get; set; }
     }

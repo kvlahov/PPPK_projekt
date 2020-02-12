@@ -5,3 +5,142 @@
 
 <h2>Entity</h2>
 
+<!-- Modal -->
+<div id="modal-form" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body container" style="overflow:hidden;">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <table class="table table-condensed table-hover" id="vehicle-table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Model</th>
+                        <th>Type</th>
+                        <th>Year manufactured</th>
+                        <th>Registration</th>
+                        <th>Initial km</th>
+                        <th>Available</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+        <div class="col-md-7" id="services">
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+        const vehicleColumns = [
+            { "data": "IDVehicle" },
+            { "data": "Model" },
+            { "data": "Type" },
+            { "data": "YearManufactured" },
+            { "data": "Registration" },
+            { "data": "InitialKilometres" },
+            { "data": "IsAvailable" },
+        ];
+
+        const serviceColumns = [
+            { "data": "IDService" },
+            {
+                "data": "DatetimeService",
+                render: function (data, type, full, meta) {
+                    return getHtmlDateForDataTable(data);
+                }
+            },
+            { "data": "Description" }
+        ];
+
+        const table = $('#vehicle-table').DataTable({
+            scrollX: true,
+            deferRender: true,
+            autoWidth: true,
+            select: true,
+            bFilter: false,
+            ajax: {
+                url: '@Url.Action("GetVehicles","Entity")',
+                method: 'GET'
+            },
+            columns: vehicleColumns,
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+        });
+
+        $('#vehicle-table').DataTable().on('select', function (e, dt, type, indexes) {
+            reloadTable();
+        });
+
+        $('#vehicle-table').DataTable().on('deselect', function (e, dt, type, indexes) {
+            $('#services').html('');
+        });
+
+        function regiseterOnClickListeners() {
+            $('#btnCreate').on('click', function (e) {
+                showInsertForm(
+                    '@Url.Action("GetServiceForm","Entity")',
+                    '@Url.Action("InsertService","Entity")',
+                    () => $('#vehicleID').val($(this).siblings('input:hidden').val()),
+                    reloadTable
+                );
+            });
+
+            $('.btnEdit').on('click', function (e) {
+                const id = $(this).siblings('input:hidden').val();
+                showUpdateForm('@Url.Action("GetServiceForm","Entity")', id,'@Url.Action("UpdateService","Entity")', reloadTable);
+            });
+
+            $('.btnDelete').on('click', function (e) {
+                const id = $(this).siblings('input:hidden').val();
+                deleteEntity('@Url.Action("DeleteService","Entity")', id, reloadTable)
+            });
+
+        }
+
+        function reloadTable() {
+            const id = getSelectedItemId( $('#vehicle-table').DataTable() );
+            if (id != -1) {
+                $.ajax({
+                    url: '@Url.Action("GetServicesForVehicle", "Entity")',
+                    data: { id: id },
+                    dataType: 'html',
+                    success: function (response) {
+                        $('#services').html(response);
+                        regiseterOnClickListeners();
+                    }
+                });
+            } else {
+                $('#services').html('');
+            }
+        }
+
+    </script>
+}

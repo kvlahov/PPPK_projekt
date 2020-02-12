@@ -72,7 +72,7 @@ namespace PPPK.DAL.Implementations.SqlConnections
         {
             return new City
             {
-                IDCity = Convert.ToInt64(reader[nameof(type.IDCity)].ToString()),
+                IDCity = Convert.ToInt32(reader[nameof(type.IDCity)].ToString()),
                 Name = reader[nameof(type.Name)].ToString()
             };
         }

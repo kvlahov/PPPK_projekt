@@ -49,7 +49,7 @@ namespace PPPK.DAL.Implementations.DAAB
                 {
                     yield return new RouteInfo
                     {
-                        IDRouteInfo = Convert.ToInt64(dr[nameof(RouteInfo.IDRouteInfo)]),
+                        IDRouteInfo = Convert.ToInt32(dr[nameof(RouteInfo.IDRouteInfo)]),
                         DateTimeStart = Convert.ToDateTime(dr[nameof(RouteInfo.DateTimeStart)]),
                         DateTimeEnd = Convert.ToDateTime(dr[nameof(RouteInfo.DateTimeEnd)]),
                         LatitudeStart = Convert.ToDouble(dr[nameof(RouteInfo.LatitudeStart)]),
@@ -59,7 +59,7 @@ namespace PPPK.DAL.Implementations.DAAB
                         DistanceInKm = Convert.ToDouble(dr[nameof(RouteInfo.DistanceInKm)]),
                         AverageSpeed = Convert.ToDouble(dr[nameof(RouteInfo.AverageSpeed)]),
                         FuelExpense = Convert.ToDouble(dr[nameof(RouteInfo.FuelExpense)]),
-                        TravelOrderID = Convert.ToInt64(dr[nameof(RouteInfo.TravelOrderID)])
+                        TravelOrderID = Convert.ToInt32(dr[nameof(RouteInfo.TravelOrderID)])
                     };
                 }
             }
@@ -73,7 +73,7 @@ namespace PPPK.DAL.Implementations.DAAB
             {
                 return new RouteInfo
                 {
-                    IDRouteInfo = Convert.ToInt64(dr[nameof(RouteInfo.IDRouteInfo)]),
+                    IDRouteInfo = Convert.ToInt32(dr[nameof(RouteInfo.IDRouteInfo)]),
                     DateTimeStart = Convert.ToDateTime(dr[nameof(RouteInfo.DateTimeStart)]),
                     DateTimeEnd = Convert.ToDateTime(dr[nameof(RouteInfo.DateTimeEnd)]),
                     LatitudeStart = Convert.ToDouble(dr[nameof(RouteInfo.LatitudeStart)]),
@@ -83,7 +83,7 @@ namespace PPPK.DAL.Implementations.DAAB
                     DistanceInKm = Convert.ToDouble(dr[nameof(RouteInfo.DistanceInKm)]),
                     AverageSpeed = Convert.ToDouble(dr[nameof(RouteInfo.AverageSpeed)]),
                     FuelExpense = Convert.ToDouble(dr[nameof(RouteInfo.FuelExpense)]),
-                    TravelOrderID = Convert.ToInt64(dr[nameof(RouteInfo.TravelOrderID)])
+                    TravelOrderID = Convert.ToInt32(dr[nameof(RouteInfo.TravelOrderID)])
                 };
             }
             return null;

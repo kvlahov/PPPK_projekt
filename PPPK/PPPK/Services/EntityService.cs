@@ -1,6 +1,7 @@
 ﻿using PPPK.DAL;
 using PPPK.DAL.Implementations;
 using PPPK.Models;
+using PPPK.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,84 @@ namespace PPPK.Services
             unitOfWork = new AppUnitOfWork(Enums.RepoMode.Entity);
         }
 
-        public IEnumerable<ServiceInfo> GetServices(long vehicleID)
+        internal List<Vehicle> GetAllVehicles()
         {
-            var vehicle = unitOfWork.VehicleRepository.GetById(vehicleID);
-            var vehicles = unitOfWork.VehicleRepository.GetAll().ToList();
-            var services = unitOfWork.ServiceInfoRepository.GetAll().ToList();
-            //var si = vehicle.ServiceInfos;
+            return unitOfWork.VehicleRepository.GetAll().ToList();
+        }
 
-            return null;
+        internal List<ServiceInfo> GetServicesForVehicle(int id)
+        {
+            return unitOfWork.VehicleRepository.GetById(id).ServiceInfos.ToList();
+        }
+
+        internal bool InsertService(ServiceInfo serviceInfo)
+        {
+            try
+            {
+                unitOfWork.ServiceInfoRepository.Add(serviceInfo);
+                unitOfWork.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        internal bool UpdateService(ServiceInfo serviceInfo)
+        {
+            try
+            {
+                unitOfWork.ServiceInfoRepository.Update(serviceInfo);
+                unitOfWork.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        internal ServiceInfo GetService(int? id)
+        {
+            return id.HasValue ? unitOfWork.ServiceInfoRepository.GetById(id.Value) : new ServiceInfo();
+        }
+
+        internal bool DeleteService(int id)
+        {
+            try
+            {
+                unitOfWork.ServiceInfoRepository.Delete(id);
+                unitOfWork.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        internal VehicleViewModel GetVehicleViewModel(int id)
+        {
+            var vm = new VehicleViewModel();
+            vm.Vehicle = unitOfWork.VehicleRepository.GetById(id);
+            vm.Services = vm.Vehicle.ServiceInfos.ToList();
+
+            var avg = vm.Vehicle
+                .TravelOrders
+                .SelectMany(t => t.RouteInfos)
+                .Average(r => r.AverageSpeed);
+
+            vm.AverageSpeed = avg ?? 0;
+
+            var kmSum = vm.Vehicle
+                .TravelOrders
+                .SelectMany(t => t.RouteInfos)
+                .Sum(r => r.DistanceInKm);
+
+            vm.TotalKm = (kmSum ?? 0) + vm.Vehicle.InitialKilometres;
+
+            return vm;
         }
     }
 }

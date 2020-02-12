@@ -1,21 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace PPPK.Models
 {
+    [Table("Vehicle")]
     public class Vehicle
     {
         [Key]
-        public long IDVehicle { get; set; }
+        public int IDVehicle { get; set; }
+
+        [Required]
+        [StringLength(30)]
         public string Registration { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string Type { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string Model { get; set; }
-        public int YearManufactured { get; set; }
+
+        public short YearManufactured { get; set; }
+
         public double InitialKilometres { get; set; }
-        public bool IsAvailable { get; set; } = true;
+
+        public bool IsAvailable { get; set; }
+        [ScriptIgnore(ApplyToOverrides = true)]
         public virtual ICollection<ServiceInfo> ServiceInfos { get; set; }
+        [ScriptIgnore(ApplyToOverrides = true)]
+        public virtual ICollection<TravelOrder> TravelOrders { get; set; }
     }
 }

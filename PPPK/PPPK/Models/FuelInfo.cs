@@ -7,15 +7,25 @@ using System.Web;
 
 namespace PPPK.Models
 {
+    [Table("FuelInfo")]
     public class FuelInfo
     {
         [Key]
-        public long IDFuelInfo { get; set; }
+        public int IDFuelInfo { get; set; }
+
+        [StringLength(50)]
         public string Location { get; set; }
-        public double Amount { get; set; }
-        public double Price { get; set; }
-        public DateTime DatePurchased { get; set; }
-        public long TravelOrderID { get; set; }
+
+        public double? Amount { get; set; }
+
+        [Column(TypeName = "money")]
+        public decimal? Price { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? DatePurchased { get; set; }
+
+        public int? TravelOrderID { get; set; }
+
         [ForeignKey("TravelOrderID")]
         public virtual TravelOrder TravelOrder { get; set; }
     }
