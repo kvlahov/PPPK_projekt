@@ -45,7 +45,7 @@ function getSelectedItemId(table) {
     return data[idKey];
 }
 
-function showInsertForm(getFormUrl, insertUrl, onFormShow = () => { }, onSuccess = () => { }) {
+function showInsertForm(getFormUrl, insertUrl, onSuccess = () => { }, onFormShow = () => { }) {
 
     $.ajax({
         type: 'GET',
