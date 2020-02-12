@@ -224,7 +224,7 @@
                         {
                             text: 'New',
                             action: function (e, dt, node, config) {
-                                showInsertForm(options[selector].getUrl, options[selector].createUrl);
+                                showInsertForm(options[selector].getUrl, options[selector].createUrl, () => $($.fn.dataTable.tables(true)).DataTable().ajax.reload());
                             }
                         },
                         {
@@ -232,7 +232,7 @@
                             action: function (e, dt, node, config) {
                                 const id = getSelectedItemId(dt);
                                 if (id != -1) {
-                                    showUpdateForm(options[selector].getUrl, id, options[selector].updateUrl);
+                                    showUpdateForm(options[selector].getUrl, id, options[selector].updateUrl, () => $($.fn.dataTable.tables(true)).DataTable().ajax.reload());
                                 } else {
                                     alertify.alert('Select item', 'Please select an item');
                                 }
@@ -243,7 +243,7 @@
                             action: function (e, dt, node, config) {
                                 const id = getSelectedItemId(dt);
                                 if (id != -1) {
-                                    deleteEntity(options[selector].deleteUrl, id);
+                                    deleteEntity(options[selector].deleteUrl, id, () => $($.fn.dataTable.tables(true)).DataTable().ajax.reload());
                                 } else {
                                     alertify.alert('Select item', 'Please select an item');
                                 }
@@ -311,83 +311,83 @@
             select.prepend("<option value='' selected>-</option>");
         }
 
-        function showInsertForm(getFormUrl, insertUrl) {
+        //function showInsertForm(getFormUrl, insertUrl) {
 
-            $.ajax({
-                type: 'GET',
-                url: getFormUrl,
-                dataType: 'html',
-                success: function (response) {
-                    $('.modal-title').text('Create');
-                    $('.modal-body').html(response);
-                    $('.modal-footer').find('.btn-primary').remove();
+        //    $.ajax({
+        //        type: 'GET',
+        //        url: getFormUrl,
+        //        dataType: 'html',
+        //        success: function (response) {
+        //            $('.modal-title').text('Create');
+        //            $('.modal-body').html(response);
+        //            $('.modal-footer').find('.btn-primary').remove();
 
-                    $('<button/>')
-                        .text('Create')
-                        .addClass('btn btn-primary')
-                        .on('click', e => {
-                            makeAjaxRequest(insertUrl, 'POST', { model: $('.modal-body').find('form').serializeObject() });
-                             $('#modal-form').modal('hide');
-                        })
-                        .appendTo($('.modal-footer'));
+        //            $('<button/>')
+        //                .text('Create')
+        //                .addClass('btn btn-primary')
+        //                .on('click', e => {
+        //                    makeAjaxRequest(insertUrl, 'POST', { model: $('.modal-body').find('form').serializeObject() });
+        //                     $('#modal-form').modal('hide');
+        //                })
+        //                .appendTo($('.modal-footer'));
 
-                    $('#modal-form').modal('show');
-                }
-            })
-        }
+        //            $('#modal-form').modal('show');
+        //        }
+        //    })
+        //}
 
-        function showUpdateForm(getUrl, id, updateUrl) {
-            $.ajax({
-                type: 'GET',
-                url: getUrl,
-                data: { id: id },
-                dataType: 'html',
-                success: function (response) {
-                    $('.modal-title').text('Update');
-                    $('.modal-body').html(response);
-                    $('.modal-footer').find('.btn-primary').remove();
+        //function showUpdateForm(getUrl, id, updateUrl) {
+        //    $.ajax({
+        //        type: 'GET',
+        //        url: getUrl,
+        //        data: { id: id },
+        //        dataType: 'html',
+        //        success: function (response) {
+        //            $('.modal-title').text('Update');
+        //            $('.modal-body').html(response);
+        //            $('.modal-footer').find('.btn-primary').remove();
 
-                    $('<button/>')
-                        .text('Update')
-                        .addClass('btn btn-primary')
-                        .on('click', e => {
-                            makeAjaxRequest(updateUrl, 'PATCH', {
-                                model: $('.modal-body').find('form').serializeObject()
-                            });
+        //            $('<button/>')
+        //                .text('Update')
+        //                .addClass('btn btn-primary')
+        //                .on('click', e => {
+        //                    makeAjaxRequest(updateUrl, 'PATCH', {
+        //                        model: $('.modal-body').find('form').serializeObject()
+        //                    });
 
-                            $('#modal-form').modal('hide');
-                        })
-                        .appendTo($('.modal-footer'));
+        //                    $('#modal-form').modal('hide');
+        //                })
+        //                .appendTo($('.modal-footer'));
 
-                    $('#modal-form').modal('show');
-                }
-            })
-        }
+        //            $('#modal-form').modal('show');
+        //        }
+        //    })
+        //}
 
-        function deleteEntity(deleteUrl, id) {
-            alertify.confirm("Delete", "Are you sure you want to delete this record?", () => {
-                makeAjaxRequest(deleteUrl, 'delete', {id: id} )
-            }, () => { });
-        }
+        //function deleteEntity(deleteUrl, id) {
+        //    alertify.confirm("Delete", "Are you sure you want to delete this record?", () => {
+        //        makeAjaxRequest(deleteUrl, 'delete', {id: id} )
+        //    }, () => { });
+        //}
 
-        function makeAjaxRequest(url, method, data) {
-            $.ajax({
-                type: method,
-                url: url,
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                dataType:'json',
-                success: function (response) {
-                    alertify.set('notifier','position', 'top-center');
-                    if (response.success) {
-                        alertify.success('Operation was successful');
-                        $($.fn.dataTable.tables(true)).DataTable().ajax.reload();
-                    } else {
-                        alertify.error('Operation has failed!');
-                    }
-                }
-            });
-        }
+        //function makeAjaxRequest(url, method, data) {
+        //    $.ajax({
+        //        type: method,
+        //        url: url,
+        //        contentType: 'application/json',
+        //        data: JSON.stringify(data),
+        //        dataType:'json',
+        //        success: function (response) {
+        //            alertify.set('notifier','position', 'top-center');
+        //            if (response.success) {
+        //                alertify.success('Operation was successful');
+        //                $($.fn.dataTable.tables(true)).DataTable().ajax.reload();
+        //            } else {
+        //                alertify.error('Operation has failed!');
+        //            }
+        //        }
+        //    });
+        //}
 
         //function getHtmlDateForDataTable(dateJson) {
         //    const dateLocale = "nb-NO";
@@ -426,13 +426,6 @@
         //    });
         //    return o;
         //};
-
-        $.fn.removeClassStartingWith = function (filter) {
-            $(this).removeClass(function (index, className) {
-                return (className.match(new RegExp("\\S*" + filter + "\\S*", 'g')) || []).join(' ')
-            });
-            return this;
-        };
 
     </script>
 }

@@ -33,6 +33,7 @@ namespace PPPK.Services
             try
             {
                 unitOfWork.ServiceInfoRepository.Add(serviceInfo);
+                unitOfWork.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -46,6 +47,7 @@ namespace PPPK.Services
             try
             {
                 unitOfWork.ServiceInfoRepository.Update(serviceInfo);
+                unitOfWork.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -54,11 +56,17 @@ namespace PPPK.Services
             }
         }
 
+        internal ServiceInfo GetService(int? id)
+        {
+            return id.HasValue ? unitOfWork.ServiceInfoRepository.GetById(id.Value) : new ServiceInfo();
+        }
+
         internal bool DeleteService(int id)
         {
             try
             {
                 unitOfWork.ServiceInfoRepository.Delete(id);
+                unitOfWork.SaveChanges();
                 return true;
             }
             catch (Exception)

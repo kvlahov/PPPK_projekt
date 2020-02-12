@@ -44,3 +44,82 @@ function getSelectedItemId(table) {
     const idKey = Object.keys(data)[0];
     return data[idKey];
 }
+
+function showInsertForm(getFormUrl, insertUrl, onFormShow = () => { }, onSuccess = () => { }) {
+
+    $.ajax({
+        type: 'GET',
+        url: getFormUrl,
+        dataType: 'html',
+        success: function (response) {
+            $('.modal-title').text('Create');
+            $('.modal-body').html(response);
+            $('.modal-footer').find('.btn-primary').remove();
+
+            $('<button/>')
+                .text('Create')
+                .addClass('btn btn-primary')
+                .on('click', e => {
+                    makeAjaxRequest(insertUrl, 'POST', { model: $('.modal-body').find('form').serializeObject() }, onSuccess);
+                    $('#modal-form').modal('hide');
+                })
+                .appendTo($('.modal-footer'));
+
+            $('#modal-form').modal('show');
+            onFormShow();
+        }
+    })
+}
+
+function showUpdateForm(getUrl, id, updateUrl, onSuccess = () => { }) {
+    $.ajax({
+        type: 'GET',
+        url: getUrl,
+        data: { id: id },
+        dataType: 'html',
+        success: function (response) {
+            $('.modal-title').text('Update');
+            $('.modal-body').html(response);
+            $('.modal-footer').find('.btn-primary').remove();
+
+            $('<button/>')
+                .text('Update')
+                .addClass('btn btn-primary')
+                .on('click', e => {
+                    makeAjaxRequest(updateUrl, 'PATCH', {
+                        model: $('.modal-body').find('form').serializeObject()
+                    }, onSuccess);
+
+                    $('#modal-form').modal('hide');
+                })
+                .appendTo($('.modal-footer'));
+
+            $('#modal-form').modal('show');
+        }
+    })
+}
+
+function deleteEntity(deleteUrl, id, onSuccess = () => { }) {
+    alertify.confirm("Delete", "Are you sure you want to delete this record?", () => {
+        makeAjaxRequest(deleteUrl, 'delete', { id: id }, onSuccess)
+    }, () => { });
+}
+
+function makeAjaxRequest(url, method, data, onSuccess = () => { }) {
+    $.ajax({
+        type: method,
+        url: url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        success: function (response) {
+            alertify.set('notifier', 'position', 'top-center');
+            if (response.success) {
+                alertify.success('Operation was successful');
+                onSuccess();
+            } else {
+                alertify.error('Operation has failed!');
+            }
+        }
+    });
+}

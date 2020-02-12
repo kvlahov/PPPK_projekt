@@ -5,6 +5,27 @@
 
 <h2>Entity</h2>
 
+<!-- Modal -->
+<div id="modal-form" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body container" style="overflow:hidden;">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-5">
@@ -75,7 +96,37 @@
         });
 
         $('#vehicle-table').DataTable().on('select', function (e, dt, type, indexes) {
-            const id = getSelectedItemId(dt);
+            reloadTable();
+        });
+
+        $('#vehicle-table').DataTable().on('deselect', function (e, dt, type, indexes) {
+            $('#services').html('');
+        });
+
+        function regiseterOnClickListeners() {
+            $('#btnCreate').on('click', function (e) {
+                showInsertForm(
+                    '@Url.Action("GetServiceForm","Entity")',
+                    '@Url.Action("InsertService","Entity")',
+                    () => $('#vehicleID').val($(this).siblings('input:hidden').val()),
+                    reloadTable
+                );
+            });
+
+            $('.btnEdit').on('click', function (e) {
+                const id = $(this).siblings('input:hidden').val();
+                showUpdateForm('@Url.Action("GetServiceForm","Entity")', id,'@Url.Action("UpdateService","Entity")', reloadTable);
+            });
+
+            $('.btnDelete').on('click', function (e) {
+                const id = $(this).siblings('input:hidden').val();
+                deleteEntity('@Url.Action("DeleteService","Entity")', id, reloadTable)
+            });
+
+        }
+
+        function reloadTable() {
+            const id = getSelectedItemId( $('#vehicle-table').DataTable() );
             if (id != -1) {
                 $.ajax({
                     url: '@Url.Action("GetServicesForVehicle", "Entity")',
@@ -83,17 +134,13 @@
                     dataType: 'html',
                     success: function (response) {
                         $('#services').html(response);
+                        regiseterOnClickListeners();
                     }
                 });
             } else {
                 $('#services').html('');
             }
-        });
-
-        $('#vehicle-table').DataTable().on('deselect', function (e, dt, type, indexes) {
-                $('#services').html('');
-        });
-
+        }
 
     </script>
 }

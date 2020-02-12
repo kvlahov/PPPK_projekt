@@ -15,6 +15,7 @@ namespace PPPK.Models
 
         public int VehicleID { get; set; }
 
+        [Display(Name ="Date of service")]
         public DateTime? DatetimeService { get; set; }
 
         [Column(TypeName = "money")]

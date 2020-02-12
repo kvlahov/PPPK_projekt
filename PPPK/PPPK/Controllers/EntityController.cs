@@ -31,20 +31,28 @@ namespace PPPK.Controllers
         public ActionResult GetServicesForVehicle(int id)
         {
             List<ServiceInfo> services = service.GetServicesForVehicle(id);
+            ViewBag.VehicleID = id;
             return PartialView("_ServiceInfoes", services);
             //return Json(new { data = services }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetServiceForm(int? id)
+        {
+            ServiceInfo model = service.GetService(id);
+            return PartialView("_ServiceForm", model);
+        }
+
         [HttpPost]
-        public ActionResult InsertService(ServiceInfo serviceInfo)
+        public ActionResult InsertService(ServiceInfo model)
         {
             
-            return Json(new { success = service.InsertService(serviceInfo) });
+            return Json(new { success = service.InsertService(model) });
         }
 
         [HttpPatch]
-        public ActionResult UpdateService(ServiceInfo serviceInfo)
+        public ActionResult UpdateService(ServiceInfo model)
         {
-            return Json(new { success = service.UpdateService(serviceInfo) });
+            return Json(new { success = service.UpdateService(model) });
         }
 
         [HttpDelete]

@@ -315,6 +315,7 @@
     <Content Include="Views\SqlConnection\_VehicleForm.cshtml" />
     <Content Include="Views\Entity\Index.cshtml" />
     <Content Include="Views\Entity\_ServiceInfoes.cshtml" />
+    <Content Include="Views\Entity\_ServiceForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
