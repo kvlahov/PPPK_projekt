@@ -45,14 +45,21 @@ namespace PPPK.Controllers
         [HttpPost]
         public ActionResult InsertService(ServiceInfo model)
         {
-            
-            return Json(new { success = service.InsertService(model) });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = service.InsertService(model) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         [HttpPatch]
         public ActionResult UpdateService(ServiceInfo model)
         {
-            return Json(new { success = service.UpdateService(model) });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = service.UpdateService(model) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         [HttpDelete]

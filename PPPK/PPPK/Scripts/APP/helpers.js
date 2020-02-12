@@ -67,6 +67,7 @@ function showInsertForm(getFormUrl, insertUrl, onSuccess = () => { }, onFormShow
 
             $('#modal-form').modal('show');
             onFormShow();
+            $.validator.unobtrusive.parse($('.modal-body'));
         }
     })
 }
@@ -95,6 +96,7 @@ function showUpdateForm(getUrl, id, updateUrl, onSuccess = () => { }) {
                 .appendTo($('.modal-footer'));
 
             $('#modal-form').modal('show');
+            //$.validator.unobtrusive.parse($('.modal-body'));
         }
     })
 }
@@ -119,6 +121,7 @@ function makeAjaxRequest(url, method, data, onSuccess = () => { }) {
                 onSuccess();
             } else {
                 alertify.error('Operation has failed!');
+                response.errors.forEach(e => alertify.error(e));
             }
         }
     });
