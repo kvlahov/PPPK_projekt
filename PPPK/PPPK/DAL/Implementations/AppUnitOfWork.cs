@@ -17,7 +17,7 @@ namespace PPPK.DAL.Implementations
     public class AppUnitOfWork : IUnitOfWork, IDisposable
     {
         public SqlConnection Connection { get; private set; }
-        private SqlTransaction _transaction;
+        public SqlTransaction Transaction { get; private set; }
         string _connectionString;
         ApplicationContext _context;
 
@@ -77,22 +77,30 @@ namespace PPPK.DAL.Implementations
 
         public void BeginTransaction()
         {
-            _transaction = Connection.BeginTransaction();
+            Transaction = Connection.BeginTransaction();
         }
 
         public void CommitTransaction()
         {
-            _transaction.Commit();
+            Transaction.Commit();
         }
 
         public void RollbackTransaction()
         {
-            _transaction.Rollback();
+            Transaction.Rollback();
         }
 
         public void SaveChanges()
         {
             _context.SaveChanges();
+        }
+
+        public void ClearDatabase()
+        {
+            var cmd = Connection.CreateCommand();
+            cmd.CommandText = "clearDatabase";
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.ExecuteNonQuery();
         }
 
         #region IDisposable Support
@@ -104,7 +112,8 @@ namespace PPPK.DAL.Implementations
             {
                 if (disposing)
                 {
-                    _transaction.Dispose();
+                    Transaction.Dispose();
+                    Connection.Close();
                 }
 
                 disposedValue = true;

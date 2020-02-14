@@ -25,6 +25,30 @@
       <LastName>Bee</LastName>
       <DriversLicence>vf654287</DriversLicence>
     </Driver>
+    <Driver>
+      <IDDriver>5</IDDriver>
+      <FirstName>﻿NewName</FirstName>
+      <LastName>NewSurname</LastName>
+      <DriversLicence>rt456878</DriversLicence>
+    </Driver>
+    <Driver>
+      <IDDriver>6</IDDriver>
+      <FirstName>Pero</FirstName>
+      <LastName>Stipis</LastName>
+      <DriversLicence>rt456880</DriversLicence>
+    </Driver>
+    <Driver>
+      <IDDriver>7</IDDriver>
+      <FirstName>Gordon</FirstName>
+      <LastName>Ramsay</LastName>
+      <DriversLicence>rt456881</DriversLicence>
+    </Driver>
+    <Driver>
+      <IDDriver>8</IDDriver>
+      <FirstName>British</FirstName>
+      <LastName>Ramsay</LastName>
+      <DriversLicence>rt456882</DriversLicence>
+    </Driver>
   </Drivers>
   <Vehicles>
     <Vehicle>
@@ -79,6 +103,42 @@
       <Model>Bugatti</Model>
       <YearManufactured>2016</YearManufactured>
       <InitialKilometres>10000</InitialKilometres>
+      <IsAvailable>True</IsAvailable>
+    </Vehicle>
+    <Vehicle>
+      <IDVehicle>7</IDVehicle>
+      <Registration>zg1234ba</Registration>
+      <Type>Polo</Type>
+      <Model>Volkswagen</Model>
+      <YearManufactured>2010</YearManufactured>
+      <InitialKilometres>150000</InitialKilometres>
+      <IsAvailable>True</IsAvailable>
+    </Vehicle>
+    <Vehicle>
+      <IDVehicle>8</IDVehicle>
+      <Registration>�i4323gt</Registration>
+      <Type>Lacetti</Type>
+      <Model>Chevrolet</Model>
+      <YearManufactured>2018</YearManufactured>
+      <InitialKilometres>50000</InitialKilometres>
+      <IsAvailable>True</IsAvailable>
+    </Vehicle>
+    <Vehicle>
+      <IDVehicle>9</IDVehicle>
+      <Registration>zd232bg</Registration>
+      <Type>Romeo</Type>
+      <Model>Alfa</Model>
+      <YearManufactured>2020</YearManufactured>
+      <InitialKilometres>1000</InitialKilometres>
+      <IsAvailable>True</IsAvailable>
+    </Vehicle>
+    <Vehicle>
+      <IDVehicle>10</IDVehicle>
+      <Registration>zg7656re</Registration>
+      <Type>Polo</Type>
+      <Model>Volkswagen</Model>
+      <YearManufactured>2016</YearManufactured>
+      <InitialKilometres>35000</InitialKilometres>
       <IsAvailable>True</IsAvailable>
     </Vehicle>
   </Vehicles>
@@ -2326,7 +2386,7 @@
     <ServiceInfo>
       <IDService>1</IDService>
       <VehicleID>1</VehicleID>
-      <DatetimeService>05-Feb-20 11:44:59 PM</DatetimeService>
+      <DatetimeService>11-Feb-20 10:13:39 PM</DatetimeService>
       <Cost>1000.0000</Cost>
       <Description>Promijenjena zadnja felga</Description>
     </ServiceInfo>
@@ -2349,7 +2409,14 @@
       <VehicleID>2</VehicleID>
       <DatetimeService>05-Feb-20 12:00:00 AM</DatetimeService>
       <Cost>2100.0000</Cost>
-      <Description>Zamagljena stakla</Description>
+      <Description>Zamagljena zadnja stakla</Description>
+    </ServiceInfo>
+    <ServiceInfo>
+      <IDService>6</IDService>
+      <VehicleID>1</VehicleID>
+      <DatetimeService>12-Feb-20 12:00:00 AM</DatetimeService>
+      <Cost>1200.2500</Cost>
+      <Description>Pukla guma</Description>
     </ServiceInfo>
   </ServiceInfos>
   <TravelOrders>
@@ -2359,25 +2426,39 @@
       <VehicleID>1</VehicleID>
       <TravelOrderTypeID>1</TravelOrderTypeID>
       <CityStartId>1</CityStartId>
-      <CityEndId>19</CityEndId>
+      <CityEndId>1</CityEndId>
       <ExpectedNumberOfDays>12</ExpectedNumberOfDays>
-      <ReasonForTravel>hgfhh</ReasonForTravel>
+      <ReasonForTravel>Bzvz</ReasonForTravel>
       <TotalCost>1200.0000</TotalCost>
-      <DocumentDate>01-Jan-01 12:00:00 AM</DocumentDate>
+      <DocumentDate>12-Feb-20 12:00:00 AM</DocumentDate>
     </TravelOrder>
     <TravelOrder>
       <IDTravelOrder>2</IDTravelOrder>
-      <DriverID>3</DriverID>
+      <DriverID>1</DriverID>
       <VehicleID>3</VehicleID>
       <TravelOrderTypeID>1</TravelOrderTypeID>
       <CityStartId>1</CityStartId>
-      <CityEndId>1</CityEndId>
-      <ExpectedNumberOfDays>15</ExpectedNumberOfDays>
-      <ReasonForTravel>dgfg</ReasonForTravel>
-      <TotalCost>1147.0000</TotalCost>
-      <DocumentDate>01-Jan-01 12:00:00 AM</DocumentDate>
+      <CityEndId>4</CityEndId>
+      <ExpectedNumberOfDays>5</ExpectedNumberOfDays>
+      <ReasonForTravel>Smece</ReasonForTravel>
+      <TotalCost>1000.0000</TotalCost>
+      <DocumentDate>12-Feb-20 4:00:44 PM</DocumentDate>
     </TravelOrder>
   </TravelOrders>
   <FuelInfos />
-  <RouteInfos />
+  <RouteInfos>
+    <RouteInfo>
+      <IDRouteInfo>1</IDRouteInfo>
+      <DateTimeStart>13-Feb-20 12:00:00 AM</DateTimeStart>
+      <DateTimeEnd>13-Feb-20 12:00:00 AM</DateTimeEnd>
+      <LatitudeStart />
+      <LongitudeStart>123</LongitudeStart>
+      <LatitudeEnd>879</LatitudeEnd>
+      <LongitudeEnd>7897</LongitudeEnd>
+      <DistanceInKm>1200</DistanceInKm>
+      <AverageSpeed>60.75</AverageSpeed>
+      <FuelExpense>1200</FuelExpense>
+      <TravelOrderID>1</TravelOrderID>
+    </RouteInfo>
+  </RouteInfos>
 </Backup>

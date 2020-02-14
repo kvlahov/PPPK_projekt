@@ -74,7 +74,7 @@ public class ReportFXMLController implements Initializable {
     private ObservableList<TravelOrder> travelOrders;
     private HibernateRepo repository;
 
-    private final String FILE_PATH = "src/data/report/travelOrder.pdf";
+    private final String FILE_PATH = "src/data/report/travelOrder";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -129,6 +129,8 @@ public class ReportFXMLController implements Initializable {
                 cont.beginText();
 
                 cont.newLineAtOffset(25, 700);
+                cont.setLeading(14.5f);
+                
                 cont.setFont(PDType1Font.TIMES_BOLD, 20);
                 cont.showText("TRAVEL ORDER");
                 cont.newLine();
@@ -137,7 +139,6 @@ public class ReportFXMLController implements Initializable {
                 cont.newLine();
 
                 cont.setFont(PDType1Font.TIMES_ROMAN, 12);
-                cont.setLeading(14.5f);
                 
                 cont.showText("ID: " + to.getIDTravelOrder());
                 cont.newLine();
@@ -172,7 +173,8 @@ public class ReportFXMLController implements Initializable {
                 cont.showText("ROUTE INFO");
                 cont.newLine();
                 cont.showText("------------------------------------------");
-
+                cont.newLine();
+                
                 for (RouteInfo routeInfo : to.getRouteInfoCollection()) {
                     cont.showText("Date start: " + df.format(routeInfo.getDateTimeStart()));
                     cont.newLine();
@@ -201,7 +203,7 @@ public class ReportFXMLController implements Initializable {
                 cont.endText();
             }
 
-            doc.save(FILE_PATH);
+            doc.save(FILE_PATH + to.getIDTravelOrder() + ".pdf");
 
             Platform.runLater(() -> {
                 spinner.setVisible(false);

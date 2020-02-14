@@ -170,10 +170,7 @@ public class Vehicle implements Serializable {
             return false;
         }
         Vehicle other = (Vehicle) object;
-        if ((this.iDVehicle == null && other.iDVehicle != null) || (this.iDVehicle != null && !this.iDVehicle.equals(other.iDVehicle))) {
-            return false;
-        }
-        return true;
+        return this.registration.equals(other.registration);
     }
 
     @Override

@@ -15,9 +15,9 @@ import com.kvlahov.models.Vehicle;
 public class JDBCRepoFactory<T> {
     
     public static<T> IRepo<T> getRepo(Class<T> type){
-        if(type.isInstance(Driver.class)) {
+        if(type.isInstance(new Driver())) {
             return (IRepo<T>)new DriverRepo();
-        } else if (type.isInstance(Vehicle.class)) {
+        } else if (type.isInstance(new Vehicle())) {
             return (IRepo<T>)new VehicleRepo();
         }
         return null;
