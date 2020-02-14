@@ -50,20 +50,25 @@ namespace PPPK.DAL.Implementations.DAAB
                     yield return new RouteInfo
                     {
                         IDRouteInfo = Convert.ToInt32(dr[nameof(RouteInfo.IDRouteInfo)]),
-                        DateTimeStart = Convert.ToDateTime(dr[nameof(RouteInfo.DateTimeStart)]),
-                        DateTimeEnd = Convert.ToDateTime(dr[nameof(RouteInfo.DateTimeEnd)]),
-                        LatitudeStart = Convert.ToDouble(dr[nameof(RouteInfo.LatitudeStart)]),
-                        LongitudeStart = Convert.ToDouble(dr[nameof(RouteInfo.LongitudeStart)]),
-                        LatitudeEnd = Convert.ToDouble(dr[nameof(RouteInfo.LatitudeEnd)]),
-                        LongitudeEnd = Convert.ToDouble(dr[nameof(RouteInfo.LongitudeEnd)]),
-                        DistanceInKm = Convert.ToDouble(dr[nameof(RouteInfo.DistanceInKm)]),
-                        AverageSpeed = Convert.ToDouble(dr[nameof(RouteInfo.AverageSpeed)]),
-                        FuelExpense = Convert.ToDouble(dr[nameof(RouteInfo.FuelExpense)]),
-                        TravelOrderID = Convert.ToInt32(dr[nameof(RouteInfo.TravelOrderID)])
+                        DateTimeStart = ToDateTimeSafe(dr[nameof(RouteInfo.DateTimeStart)]),
+                        DateTimeEnd = ToDateTimeSafe(dr[nameof(RouteInfo.DateTimeEnd)]),
+                        LatitudeStart = ToTypeSafely<double?>(dr[nameof(RouteInfo.LatitudeStart)]),
+                        LongitudeStart = ToTypeSafely<double?>(dr[nameof(RouteInfo.LongitudeStart)]),
+                        LatitudeEnd = ToTypeSafely<double?>(dr[nameof(RouteInfo.LatitudeEnd)]),
+                        LongitudeEnd = ToTypeSafely<double?>(dr[nameof(RouteInfo.LongitudeEnd)]),
+                        DistanceInKm = ToTypeSafely<double?>(dr[nameof(RouteInfo.DistanceInKm)]),
+                        AverageSpeed = ToTypeSafely<double?>(dr[nameof(RouteInfo.AverageSpeed)]),
+                        FuelExpense = ToTypeSafely<double?>(dr[nameof(RouteInfo.FuelExpense)]),
+                        TravelOrderID = ToTypeSafely<int>(dr[nameof(RouteInfo.TravelOrderID)])
                     };
                 }
             }
         }
+
+        private DateTime? ToDateTimeSafe(object dataReaderValue) 
+            => dataReaderValue == DBNull.Value ? null : (DateTime?)Convert.ToDateTime(dataReaderValue);
+        private T ToTypeSafely<T>(object dataReaderValue)
+            => dataReaderValue == DBNull.Value ? default : (T) dataReaderValue;
 
         public RouteInfo GetById(long id)
         {
@@ -74,8 +79,8 @@ namespace PPPK.DAL.Implementations.DAAB
                 return new RouteInfo
                 {
                     IDRouteInfo = Convert.ToInt32(dr[nameof(RouteInfo.IDRouteInfo)]),
-                    DateTimeStart = Convert.ToDateTime(dr[nameof(RouteInfo.DateTimeStart)]),
-                    DateTimeEnd = Convert.ToDateTime(dr[nameof(RouteInfo.DateTimeEnd)]),
+                    DateTimeStart = ToDateTimeSafe(dr[nameof(RouteInfo.DateTimeStart)]),
+                    DateTimeEnd = ToDateTimeSafe(dr[nameof(RouteInfo.DateTimeEnd)]),
                     LatitudeStart = Convert.ToDouble(dr[nameof(RouteInfo.LatitudeStart)]),
                     LongitudeStart = Convert.ToDouble(dr[nameof(RouteInfo.LongitudeStart)]),
                     LatitudeEnd = Convert.ToDouble(dr[nameof(RouteInfo.LatitudeEnd)]),

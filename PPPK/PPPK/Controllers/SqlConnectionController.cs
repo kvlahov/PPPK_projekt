@@ -40,22 +40,31 @@ namespace PPPK.Controllers
         [HttpPost]
         public ActionResult InsertTravelOrder(TravelOrderViewModel model)
         {
-            var success = _service.InsertTravelOrder(model.TravelOrder);
-            return Json(new { success });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = _service.InsertTravelOrder(model.TravelOrder) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         [HttpPatch]
         public ActionResult UpdateTravelOrder(TravelOrderViewModel model)
         {
-            var success = _service.UpdateTravelOrder(model.TravelOrder);
-            return Json(new { success });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = _service.UpdateTravelOrder(model.TravelOrder) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         [HttpDelete]
         public ActionResult DeleteTravelOrder(long id)
         {
-            var success = _service.RemoveTravelOrder(id);
-            return Json(new { success });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = _service.RemoveTravelOrder(id) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         //drivers
@@ -75,22 +84,31 @@ namespace PPPK.Controllers
         [HttpPost]
         public ActionResult InsertDriver(Driver model)
         {
-            var success = _service.InsertDriver(model);
-            return Json(new { success });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = _service.InsertDriver(model) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         [HttpPatch]
         public ActionResult UpdateDriver(Driver model)
         {
-            var success = _service.UpdateDriver(model); ;
-            return Json(new { success });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = _service.UpdateDriver(model) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         [HttpDelete]
         public ActionResult DeleteDriver(long id)
         {
-            var success = _service.DeleteDriver(id); ;
-            return Json(new { success });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = _service.DeleteDriver(id) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         //vehicles
@@ -112,22 +130,31 @@ namespace PPPK.Controllers
         [HttpPost]
         public ActionResult InsertVehicle(Vehicle model)
         {
-            var success = _service.InsertVehicle(model);
-            return Json(new { success });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = _service.InsertVehicle(model) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         [HttpPatch]
         public ActionResult UpdateVehicle(Vehicle model)
         {
-            var success = _service.UpdateVehicle(model);
-            return Json(new { success });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = _service.UpdateVehicle(model) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
 
         [HttpDelete]
         public ActionResult DeleteVehicle(long id)
         {
-            var success = _service.DeleteVehicle(id);
-            return Json(new { success });
+            if (ModelState.IsValid)
+            {
+                return Json(new { success = _service.DeleteVehicle(id) });
+            }
+            return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList() });
         }
     }
 }

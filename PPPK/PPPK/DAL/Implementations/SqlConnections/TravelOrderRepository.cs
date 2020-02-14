@@ -74,7 +74,8 @@ namespace PPPK.DAL.Implementations.SqlConnections
                 ReasonForTravel = reader[nameof(type.ReasonForTravel)].ToString(),
                 CityStartId = Convert.ToInt32(reader[nameof(type.CityStartId)].ToString()),
                 CityEndId = Convert.ToInt32(reader[nameof(type.CityEndId)].ToString()),
-                DocumentDate = Convert.ToDateTime(reader[nameof(type.DocumentDate)].ToString())                
+                DocumentDate = Convert.ToDateTime(reader[nameof(type.DocumentDate)].ToString()),
+                TotalCost = Convert.ToDecimal((reader[nameof(type.TotalCost)].ToString()))
             };
         }
 
@@ -114,6 +115,7 @@ namespace PPPK.DAL.Implementations.SqlConnections
             cmd.Parameters.AddWithValue($"@{nameof(entity.CityStartId)}", entity.CityStartId);
             cmd.Parameters.AddWithValue($"@{nameof(entity.CityEndId)}", entity.CityEndId);
             cmd.Parameters.AddWithValue($"@{nameof(entity.DocumentDate)}", entity.DocumentDate);
+            cmd.Parameters.AddWithValue($"@{nameof(entity.TotalCost)}", entity.TotalCost);
         }
     }
 }

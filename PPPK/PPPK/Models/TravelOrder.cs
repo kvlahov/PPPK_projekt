@@ -32,6 +32,7 @@ namespace PPPK.Models
 
         [ForeignKey("CityEndId")]
         public virtual City CityEnd { get; set; }
+        [Required]
         public int ExpectedNumberOfDays { get; set; }
 
         [StringLength(100)]

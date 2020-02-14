@@ -1,4 +1,4 @@
-﻿@model DateTime
+﻿@model DateTime?
 <span>
-    @Model.ToString("dd.MM.yyyy")
+    @(Model == null ? string.Empty : Model.Value.ToString("dd.MM.yyyy"))
 </span>

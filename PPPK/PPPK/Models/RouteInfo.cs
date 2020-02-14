@@ -12,7 +12,10 @@ namespace PPPK.Models
     {
         [Key]
         public int IDRouteInfo { get; set; }
+        [Required]
         public DateTime? DateTimeStart { get; set; }
+
+        [Required]
         public DateTime? DateTimeEnd { get; set; }
         public double? LatitudeStart { get; set; }
         public double? LongitudeStart { get; set; }

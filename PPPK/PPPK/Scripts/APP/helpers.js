@@ -60,8 +60,10 @@ function showInsertForm(getFormUrl, insertUrl, onSuccess = () => { }, onFormShow
                 .text('Create')
                 .addClass('btn btn-primary')
                 .on('click', e => {
-                    makeAjaxRequest(insertUrl, 'POST', { model: $('.modal-body').find('form').serializeObject() }, onSuccess);
-                    $('#modal-form').modal('hide');
+                    if ($(e.target).closest('.modal-content').find('form').valid()) {
+                        makeAjaxRequest(insertUrl, 'POST', { model: $('.modal-body').find('form').serializeObject() }, onSuccess);
+                        $('#modal-form').modal('hide');
+                    }
                 })
                 .appendTo($('.modal-footer'));
 
