@@ -7,9 +7,9 @@
 
 <h4>Xml</h4>
 <div>
-    <button class="btn btn-info">Backup database</button>
-    <button class="btn btn-warning">Clear database</button>
-    <button class="btn btn-success">Restore database</button>
+    <button id="btnBackup" class="btn btn-info">Backup database</button>
+    <button id="btnClear" class="btn btn-warning">Clear database</button>
+    <button id="btnRestore" class="btn btn-success">Restore database</button>
 </div>
 
 <!-- Modal -->
@@ -63,6 +63,23 @@
 @section scripts
 {
     <script>
+        $('#btnBackup').on('click', e => {
+            makeRestoreBackupAjax('@Url.Action("CreateBackup", "DataSet")');
+        });
+
+        $('#btnClear').on('click', e => {
+            alertify.confirm(
+                "Clear",
+                "Are you sure you want to clear database?",
+                () => makeRestoreBackupAjax('@Url.Action("ClearDatabase", "DataSet")'),
+                () => { }
+            );
+        });
+
+        $('#btnRestore').on('click', e => {
+            makeRestoreBackupAjax('@Url.Action("RestoreBackup", "DataSet")');
+        });
+
 
     const travelOrderColumns = [
         { "data": "IDTravelOrder" },
@@ -149,6 +166,22 @@
             } else {
                 $('#routes').html('');
             }
+        }
+
+        function makeRestoreBackupAjax(url) {
+            $.ajax({
+                method:'get',
+                url: url,
+                dataType:'json',
+                success: (response) => {
+                    setAlertifyConfig();
+                    if (response.success) {
+                        alertify.success(response.message);
+                    } else {
+                        alertify.error(response.message);
+                    }
+                }
+            });
         }
     </script>
 }

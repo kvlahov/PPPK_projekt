@@ -5,13 +5,8 @@
  */
 package com.kvlahov.dal;
 
-import com.kvlahov.models.Driver;
 import java.util.Collection;
 
-/**
- *
- * @author lordo
- */
 public interface IRepo<T> {
     Collection<T> getAll();
     T getById(int id);

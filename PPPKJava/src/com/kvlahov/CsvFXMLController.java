@@ -13,16 +13,23 @@ import com.kvlahov.dal.IRepo;
 import com.kvlahov.dal.JDBCRepoFactory;
 import com.kvlahov.models.Driver;
 import com.kvlahov.models.Vehicle;
+import com.sun.org.apache.xerces.internal.impl.dv.DatatypeException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -30,6 +37,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 
@@ -55,7 +64,8 @@ public class CsvFXMLController implements Initializable {
     public void handleChooseFileClick(ActionEvent event) {
         FileChooser chooser = new FileChooser();
 
-//        chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("csv", "*.csv"));
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Csv", "*.csv"));
+        chooser.setInitialDirectory(new File("src/data/csv"));
         selectedFile = chooser.showOpenDialog(importDataBtn.getScene().getWindow());
         filePathLabel.setText("Selected file: " + selectedFile.getAbsolutePath());
         fileSelected.set(true);
@@ -86,36 +96,57 @@ public class CsvFXMLController implements Initializable {
                 while ((line = br.readLine()) != null) {
                     String[] driverLine = line.split(",");
 
-                    Driver driver = new Driver();
-                    driver.setIDDriver(Integer.parseInt(driverLine[0]));
-                    driver.setFirstName(driverLine[1]);
-                    driver.setLastName(driverLine[2]);
-                    driver.setDriversLicence(driverLine[3]);
+                    if (driverLine.length != 3) {
+                        throw new Exception("Number of parameters doesn't match required datatype: Driver");
+                    }
 
-                    drivers.add(driver);
+                    if (driverLine.length == 3) {
+                        Driver driver = new Driver();
+                        driver.setFirstName(driverLine[0]);
+                        driver.setLastName(driverLine[1]);
+                        driver.setDriversLicence(driverLine[2]);
+
+                        drivers.add(driver);
+
+                    }
                 }
                 insertData(drivers);
             } else {
                 List<Vehicle> vehicles = new ArrayList<>();
                 while ((line = br.readLine()) != null) {
-                    String[] vehicleLine = line.split(",");
+                    String[] dirtyLine = line.split(",");
 
-                    Vehicle vehicle = new Vehicle();
-                    vehicle.setIDVehicle(Integer.parseInt(vehicleLine[0]));
-                    vehicle.setRegistration(vehicleLine[1]);
-                    vehicle.setType(vehicleLine[2]);
-                    vehicle.setModel(vehicleLine[3]);
-                    vehicle.setYearManufactured(Short.parseShort(vehicleLine[1]));
-                    vehicle.setInitialKilometres(Double.parseDouble(vehicleLine[1]));
-                    vehicle.setIsAvailable(("1".equals(vehicleLine[1])));
+                    List<String> vehicleLine = Stream.of(dirtyLine)
+                            .map(s -> ltrim(s.replaceAll("\\R", "").trim()))
+                            .collect(Collectors.toList());
 
-                    vehicles.add(vehicle);
+                    if (vehicleLine.size() != 5) {
+                        throw new Exception("Number of parameters doesn't match required datatype: Vehicle");
+                    }
+
+                    if (vehicleLine.size() == 5) {
+                        Vehicle vehicle = new Vehicle();
+                        vehicle.setRegistration(vehicleLine.get(0));
+                        vehicle.setType(vehicleLine.get(1));
+                        vehicle.setModel(vehicleLine.get(2));
+                        vehicle.setYearManufactured(Short.parseShort(vehicleLine.get(3)));
+                        vehicle.setInitialKilometres(Double.parseDouble(vehicleLine.get(4)));
+
+                        vehicles.add(vehicle);
+                    }
                 }
 
                 insertData(vehicles);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception ex) {
+            Platform.runLater(() -> {
+                Alert a = new Alert(Alert.AlertType.ERROR, "Error while importing data:\n" + ex.getMessage(), ButtonType.OK);
+                a.setHeaderText(null);
+
+                a.showAndWait();
+            });
         }
     }
 
@@ -127,9 +158,25 @@ public class CsvFXMLController implements Initializable {
         IRepo<T> repo = JDBCRepoFactory.<T>getRepo((Class<T>) data.get(0).getClass());
         Collection<T> allData = repo.getAll();
 
-        List<T> result = data.stream().filter(d -> !allData.contains(d)).collect(Collectors.toList());
-        
+        List<T> result = data.stream()
+                .filter(d -> !allData.contains(d))
+                .distinct()
+                .collect(Collectors.toList());
+
         repo.insertRange(result);
+
+        Platform.runLater(() -> {
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "Imported " + result.size() + " records", ButtonType.OK);
+            a.setHeaderText(null);
+
+            a.showAndWait();
+        });
+    }
+
+    private final static Pattern LTRIM = Pattern.compile("^\\s+");
+
+    public static String ltrim(String s) {
+        return LTRIM.matcher(s).replaceAll("");
     }
 
 }

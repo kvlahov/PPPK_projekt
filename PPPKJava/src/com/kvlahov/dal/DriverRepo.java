@@ -87,9 +87,9 @@ public class DriverRepo implements IRepo<Driver> {
             final String query = "INSERT INTO Driver(FirstName, LastName, DriversLicence) values (?,?,?)";
             try (PreparedStatement stmt = connection.prepareStatement(query)) {
                 for (Driver entity : entities) {
-                    stmt.setString(0, entity.getFirstName());
-                    stmt.setString(1, entity.getLastName());
-                    stmt.setString(2, entity.getDriversLicence());
+                    stmt.setString(1, entity.getFirstName());
+                    stmt.setString(2, entity.getLastName());
+                    stmt.setString(3, entity.getDriversLicence());
                     
                     stmt.executeUpdate();
                 }

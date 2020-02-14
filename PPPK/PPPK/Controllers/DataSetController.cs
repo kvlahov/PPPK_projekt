@@ -11,15 +11,38 @@ namespace PPPK.Controllers
     public class DataSetController : Controller
     {
         private readonly DataSetService service;
+        private readonly XmlService xmlService;
         public DataSetController()
         {
             service = new DataSetService();
+            xmlService = new XmlService();
         }
 
         // GET: DataSet
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult CreateBackup()
+        {
+            var success = xmlService.CreateBackup();
+            var message = success ? "Backup sucessfuly created" : "Backup failed to create";
+            return Json(new { success, message }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ClearDatabase()
+        {
+            var success = xmlService.ClearDatabase();
+            var message = success ? "Database sucessfuly cleared" : "Database failed to clear";
+            return Json(new { success, message }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult RestoreBackup()
+        {
+            var success = xmlService.ImportBackup();
+            var message = success ? "Database sucessfuly restored" : "Database failed to restore";
+            return Json(new { success, message }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetTravelOrders()

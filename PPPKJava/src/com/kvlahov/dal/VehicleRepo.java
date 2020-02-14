@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,7 +35,7 @@ public class VehicleRepo implements IRepo<Vehicle> {
     @Override
     public Collection<Vehicle> getAll() {
         try (Connection conn = dataSource.getConnection();
-                CallableStatement statement = conn.prepareCall(" CALL getAllVehicles ")) {
+                CallableStatement statement = conn.prepareCall(" {CALL getAllVehicles() }")) {
             ResultSet resultSet = statement.executeQuery();
 
             List<Vehicle> vehicles = new ArrayList<>();
@@ -67,15 +68,15 @@ public class VehicleRepo implements IRepo<Vehicle> {
     @Override
     public void insert(Vehicle entity) {
         try (Connection conn = dataSource.getConnection();
-                CallableStatement statement = conn.prepareCall(" CALL insertVehicle(?,?,?,?,?,?,?) ")) {
+                CallableStatement statement = conn.prepareCall(" {CALL insertVehicle(?,?,?,?,?,?)} ")) {
 
-            statement.setString(0, entity.getModel());
-            statement.setString(1, entity.getType());
-            statement.setString(2, entity.getRegistration());
-            statement.setShort(3, entity.getYearManufactured());
-            statement.setDouble(4, entity.getInitialKilometres());
+            statement.setString(1, entity.getModel());
+            statement.setString(2, entity.getType());
+            statement.setString(3, entity.getRegistration());
+            statement.setShort(4, entity.getYearManufactured());
+            statement.setDouble(5, entity.getInitialKilometres());
 
-            statement.setInt(0, 0);
+            statement.registerOutParameter(6, Types.INTEGER);
 
             statement.executeUpdate();
 
@@ -90,15 +91,15 @@ public class VehicleRepo implements IRepo<Vehicle> {
         try (Connection conn = dataSource.getConnection()) {
             conn.setAutoCommit(false);
 
-            try (CallableStatement statement = conn.prepareCall(" CALL insertVehicle(?,?,?,?,?,?,?) ")) {
+            try (CallableStatement statement = conn.prepareCall("{ CALL insertVehicle(?,?,?,?,?,?) }")) {
                 for (Vehicle entity : entities) {
-                    statement.setString(0, entity.getModel());
-                    statement.setString(1, entity.getType());
-                    statement.setString(2, entity.getRegistration());
-                    statement.setShort(3, entity.getYearManufactured());
-                    statement.setDouble(4, entity.getInitialKilometres());
+                    statement.setString(1, entity.getModel());
+                    statement.setString(2, entity.getType());
+                    statement.setString(3, entity.getRegistration());
+                    statement.setShort(4, entity.getYearManufactured());
+                    statement.setDouble(5, entity.getInitialKilometres());
                     
-                    statement.setInt(0, 0);
+                    statement.registerOutParameter(6, Types.INTEGER);
                     
                     statement.executeUpdate();
                 }
@@ -108,8 +109,8 @@ public class VehicleRepo implements IRepo<Vehicle> {
                 conn.setAutoCommit(true);
             }
 
-        } catch (SQLException ex) {
-
+        } catch (Exception ex) {
+            
         }
 
     }

@@ -1,4 +1,8 @@
-﻿function getHtmlDateForDataTable(dateJson) {
+﻿function setAlertifyConfig() {
+    alertify.set('notifier', 'position', 'top-center');
+}
+
+function getHtmlDateForDataTable(dateJson) {
     const dateLocale = "nb-NO";
     if (dateJson == null) {
         return "";
@@ -117,7 +121,7 @@ function makeAjaxRequest(url, method, data, onSuccess = () => { }) {
         data: JSON.stringify(data),
         dataType: 'json',
         success: function (response) {
-            alertify.set('notifier', 'position', 'top-center');
+            setAlertifyConfig();
             if (response.success) {
                 alertify.success('Operation was successful');
                 onSuccess();

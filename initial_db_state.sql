@@ -747,6 +747,8 @@ begin
 	delete from TravelOrder;
 
 	delete from ServiceInfo;
+	delete from City;
+	delete from TravelOrderType;
 	delete from Driver;
 	delete from Vehicle;
 end

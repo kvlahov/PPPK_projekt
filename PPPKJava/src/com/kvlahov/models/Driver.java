@@ -120,15 +120,12 @@ public class Driver implements Serializable {
             return false;
         }
         Driver other = (Driver) object;
-        if ((this.iDDriver == null && other.iDDriver != null) || (this.iDDriver != null && !this.iDDriver.equals(other.iDDriver))) {
-            return false;
-        }
-        return true;
+        return this.driversLicence.equals(other.driversLicence);
     }
 
     @Override
     public String toString() {
         return "com.kvlahov.models.Driver[ iDDriver=" + iDDriver + " ]";
     }
-    
+
 }
