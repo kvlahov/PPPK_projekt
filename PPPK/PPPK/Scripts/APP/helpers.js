@@ -45,7 +45,7 @@ function getSelectedItemId(table) {
     return data[idKey];
 }
 
-function showInsertForm(getFormUrl, insertUrl, onFormShow = () => { }, onSuccess = () => { }) {
+function showInsertForm(getFormUrl, insertUrl, onSuccess = () => { }, onFormShow = () => { }) {
 
     $.ajax({
         type: 'GET',
@@ -60,13 +60,16 @@ function showInsertForm(getFormUrl, insertUrl, onFormShow = () => { }, onSuccess
                 .text('Create')
                 .addClass('btn btn-primary')
                 .on('click', e => {
-                    makeAjaxRequest(insertUrl, 'POST', { model: $('.modal-body').find('form').serializeObject() }, onSuccess);
-                    $('#modal-form').modal('hide');
+                    if ($(e.target).closest('.modal-content').find('form').valid()) {
+                        makeAjaxRequest(insertUrl, 'POST', { model: $('.modal-body').find('form').serializeObject() }, onSuccess);
+                        $('#modal-form').modal('hide');
+                    }
                 })
                 .appendTo($('.modal-footer'));
 
             $('#modal-form').modal('show');
             onFormShow();
+            $.validator.unobtrusive.parse($('.modal-body'));
         }
     })
 }
@@ -95,6 +98,7 @@ function showUpdateForm(getUrl, id, updateUrl, onSuccess = () => { }) {
                 .appendTo($('.modal-footer'));
 
             $('#modal-form').modal('show');
+            //$.validator.unobtrusive.parse($('.modal-body'));
         }
     })
 }
@@ -119,6 +123,7 @@ function makeAjaxRequest(url, method, data, onSuccess = () => { }) {
                 onSuccess();
             } else {
                 alertify.error('Operation has failed!');
+                response.errors.forEach(e => alertify.error(e));
             }
         }
     });

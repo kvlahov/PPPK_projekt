@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="511.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.kvlahov.CsvFXMLController">
+   <children>
+      <JFXButton layoutX="36.0" layoutY="43.0" onAction="#handleChooseFileClick" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: #333333;" text="Choose file" textFill="WHITE" />
+      <Label fx:id="filePathLabel" layoutX="145.0" layoutY="53.0" text="&lt;No file selected&gt;" />
+      <JFXButton fx:id="importDataBtn" layoutX="199.0" layoutY="133.0" onAction="#handleImportDataClick" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: #333333;" text="Import" textFill="WHITE" visible="false" />
+      <JFXComboBox fx:id="dataTypeComboBox" layoutX="36.0" layoutY="139.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="36.0" layoutY="116.0" text="Data to import:" />
+   </children>
+</AnchorPane>

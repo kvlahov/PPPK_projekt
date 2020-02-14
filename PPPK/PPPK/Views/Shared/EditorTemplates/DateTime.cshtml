@@ -1,0 +1,8 @@
+﻿@model DateTime?
+
+@{
+    
+    var date = (Model ?? DateTime.Now).ToString("yyyy-MM-dd");
+}
+
+@Html.TextBox("", date, htmlAttributes: new { @type="date", @class="form-control" })

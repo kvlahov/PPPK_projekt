@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>DataSet</h2>
+
+<h4>Xml</h4>
+<div>
+    <button class="btn btn-info">Backup database</button>
+    <button class="btn btn-warning">Clear database</button>
+    <button class="btn btn-success">Restore database</button>
+</div>
+
+<!-- Modal -->
+<div id="modal-form" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body container" style="overflow:hidden; width:100%;">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="">
+            <table class="table table-condensed table-hover" id="travel-order-table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Driver</th>
+                        <th>Vehicle</th>
+                        <th>Type</th>
+                        <th>Expected number of days</th>
+                        <th>Reason for travel</th>
+                        <th>Start city</th>
+                        <th>End city</th>
+                        <th>Document Date</th>
+                        <th>Total cost</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+        <div class="" id="routes">
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+
+    const travelOrderColumns = [
+        { "data": "IDTravelOrder" },
+        { "data": "DriverID" },
+        { "data": "VehicleID" },
+        { "data": "TravelOrderTypeID" },
+        { "data": "ExpectedNumberOfDays" },
+        { "data": "ReasonForTravel" },
+        { "data": "CityStartId" },
+        { "data": "CityEndId" },
+        {
+            "data": "DocumentDate",
+            render: function (data, type, full, meta) {
+                return getHtmlDateForDataTable(data);
+            }
+        },
+        { "data": "TotalCost" },
+    ];
+
+    const table = $('#travel-order-table').DataTable({
+            scrollX: true,
+            deferRender: true,
+            autoWidth: true,
+            select: true,
+            bLengthChange: false,
+            bFilter: false,
+            bInfo: false,
+            ajax: {
+                url: '@Url.Action("GetTravelOrders","DataSet")',
+                method: 'GET'
+            },
+            columns: travelOrderColumns,
+            columnDefs: [
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
+            ],
+        });
+
+        $('#travel-order-table').DataTable().on('select', function (e, dt, type, indexes) {
+            reloadTable();
+        });
+
+        $('#travel-order-table').DataTable().on('deselect', function (e, dt, type, indexes) {
+            $('#routes').html('');
+        });
+
+        function regiseterOnClickListeners() {
+            $('#btnCreate').on('click', function (e) {
+                showInsertForm(
+                    '@Url.Action("GetRouteInfoForm","DataSet")',
+                    '@Url.Action("InsertRouteInfo","DataSet")',
+                    reloadTable,
+                    () => $('#travelOrderID').val($(this).siblings('input:hidden').val())
+                );
+            });
+
+            $('.btnEdit').on('click', function (e) {
+                const id = $(this).siblings('input:hidden').val();
+                showUpdateForm('@Url.Action("GetRouteInfoForm","DataSet")', id,'@Url.Action("UpdateRouteInfo","DataSet")', reloadTable);
+            });
+
+            $('.btnDelete').on('click', function (e) {
+                const id = $(this).siblings('input:hidden').val();
+                deleteEntity('@Url.Action("DeleteRouteInfo","DataSet")', id, reloadTable)
+            });
+
+        }
+
+        function reloadTable() {
+            const id = getSelectedItemId( $('#travel-order-table').DataTable() );
+            if (id != -1) {
+                $.ajax({
+                    url: '@Url.Action("GetRoutesForTravelOrder", "DataSet")',
+                    data: { id: id },
+                    dataType: 'html',
+                    success: function (response) {
+                        $('#routes').html(response);
+                        regiseterOnClickListeners();
+                    }
+                });
+            } else {
+                $('#routes').html('');
+            }
+        }
+    </script>
+}

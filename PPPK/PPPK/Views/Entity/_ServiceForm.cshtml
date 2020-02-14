@@ -1,32 +1,39 @@
 ﻿@model PPPK.Models.ServiceInfo
+@{
+    var date = (Model.DatetimeService ?? DateTime.Now).ToString("yyyy-MM-dd");
+}
 
 @Html.AntiForgeryToken()
+@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "service-form" }))
+{
+    <div class="container form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IDService)
+        @Html.HiddenFor(model => model.VehicleID, new { id = "vehicleID" })
 
-<div class="container form-horizontal">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.IDService, new { id="vehicleID" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DatetimeService, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*<input type="date" class = "form-control" value='@date'/>*@
+                @Html.EditorFor(model => model.DatetimeService, new { htmlAttributes = new { @class = "form-control", @type = "date", @Value = date } })
+                @Html.ValidationMessageFor(model => model.DatetimeService, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DatetimeService, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DatetimeService, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DatetimeService, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-</div>
+}

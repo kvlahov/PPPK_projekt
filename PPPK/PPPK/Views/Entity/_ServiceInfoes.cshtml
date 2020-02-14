@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PPPK.Models.ServiceInfo>
 
 <p>
-    <input type="hidden" value="@ViewBag.VehicleID"/>
+    <input type="hidden" value="@ViewBag.VehicleID" name="VehicleID"/>
     <button class="btn btn-default" id="btnCreate">Create New</button>
 </p>
 @if (Model.Count() > 0)
@@ -24,7 +24,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DatetimeService)
+                    @item.DatetimeService.Value.ToString("dd.MM.yyyy")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Cost)

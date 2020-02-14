@@ -14,14 +14,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TravelOrder.DriverID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TravelOrder.DriverID, new SelectList(Model.Drivers, "IDDriver", "FirstName", Model.TravelOrder.DriverID), new { @class="form-control" })                
+                @Html.DropDownListFor(model => model.TravelOrder.DriverID, new SelectList(Model.Drivers, "IDDriver", "FirstName", Model.TravelOrder.DriverID), new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.TravelOrder.VehicleID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TravelOrder.VehicleID, new SelectList(Model.Vehicles, "IDVehicle", "Type", Model.TravelOrder.VehicleID), new { @class="form-control" })
+                @Html.DropDownListFor(model => model.TravelOrder.VehicleID, new SelectList(Model.Vehicles, "IDVehicle", "Type", Model.TravelOrder.VehicleID), new { @class = "form-control" })
 
             </div>
         </div>
@@ -29,21 +29,29 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TravelOrder.TravelOrderTypeID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TravelOrder.TravelOrderTypeID, new SelectList(Model.TravelOrderTypes, "IDTravelOrderType", "Type", Model.TravelOrder.TravelOrderTypeID), new { @class="form-control" })
+                @Html.DropDownListFor(model => model.TravelOrder.TravelOrderTypeID, new SelectList(Model.TravelOrderTypes, "IDTravelOrderType", "Type", Model.TravelOrder.TravelOrderTypeID), new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.TravelOrder.CityStartId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TravelOrder.CityStartId, new SelectList(Model.Cities, "IDCity", "Name", Model.TravelOrder.CityStartId), new { @class="form-control" })
+                @Html.DropDownListFor(model => model.TravelOrder.CityStartId, new SelectList(Model.Cities, "IDCity", "Name", Model.TravelOrder.CityStartId), new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.TravelOrder.CityEndId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.TravelOrder.CityEndId, new SelectList(Model.Cities, "IDCity", "Name", Model.TravelOrder.CityEndId), new { @class="form-control" })
+                @Html.DropDownListFor(model => model.TravelOrder.CityEndId, new SelectList(Model.Cities, "IDCity", "Name", Model.TravelOrder.CityEndId), new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TravelOrder.DocumentDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TravelOrder.DocumentDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TravelOrder.DocumentDate, "", new { @class = "text-danger" })
             </div>
         </div>
 

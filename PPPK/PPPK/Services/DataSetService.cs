@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
 using PPPK.DAL;
 using PPPK.DAL.Implementations;
+using PPPK.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -66,6 +67,36 @@ namespace PPPK.Services
             //    }
             //    sb.Append("]<br/><br/>");
             //}
+        }
+
+        public List<TravelOrder> GetTravelOrders()
+        {
+            return unitOfWork.TravelOrderRepository.GetAll().ToList();
+        }
+
+        public List<RouteInfo> GetRouteInfoesForTravelOrder(int id)
+        {
+            return unitOfWork.RouteInfoRepository.GetAll().Where(r => r.TravelOrderID == id).ToList();
+        }
+
+        internal RouteInfo GetRouteInfo(int? id)
+        {
+            return id.HasValue ? unitOfWork.RouteInfoRepository.GetById(id.Value) : new RouteInfo();
+        }
+
+        public bool InsertRouteInfo(RouteInfo model)
+        {
+            return unitOfWork.RouteInfoRepository.Add(model) != 0;
+        }
+
+        public bool UpdateRouteInfo(RouteInfo model)
+        {
+            return unitOfWork.RouteInfoRepository.Update(model) > 0;
+        }
+
+        public bool DeleteRouteInfo(int id)
+        {
+            return unitOfWork.RouteInfoRepository.Delete(id) > 0;
         }
     }
 }

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<PPPK.Models.RouteInfo>
+
+<p>
+    <input type="hidden" value="@ViewBag.TravelOrderID" name="VehicleID" />
+    <button class="btn btn-default" id="btnCreate">Create New</button>
+</p>
+@if (Model.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-condensed table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateTimeStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateTimeEnd)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LatitudeStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LongitudeStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LatitudeEnd)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LongitudeEnd)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DistanceInKm)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AverageSpeed)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FuelExpense)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TravelOrderID)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTimeStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTimeEnd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LatitudeStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LongitudeStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LatitudeEnd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LongitudeEnd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DistanceInKm)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AverageSpeed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FuelExpense)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TravelOrderID)
+                    </td>
+                    <td style="white-space:nowrap">
+                        @Html.HiddenFor(m => item.IDRouteInfo)
+                        <a href="#" onclick="javascript:return false;" class="btnEdit">Edit</a> |
+                        <a href="#" onclick="javascript:return false;" class="btnDelete">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+}

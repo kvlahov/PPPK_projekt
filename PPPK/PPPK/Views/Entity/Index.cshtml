@@ -28,7 +28,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
+            <button class="btn btn-info" id="btnReport">Generate report</button>
             <table class="table table-condensed table-hover" id="vehicle-table" style="width:100%">
                 <thead>
                     <tr>
@@ -45,7 +46,7 @@
                 <tfoot></tfoot>
             </table>
         </div>
-        <div class="col-md-7" id="services">
+        <div class="col-md-6" id="services">
         </div>
     </div>
 </div>
@@ -64,23 +65,14 @@
             { "data": "IsAvailable" },
         ];
 
-        const serviceColumns = [
-            { "data": "IDService" },
-            {
-                "data": "DatetimeService",
-                render: function (data, type, full, meta) {
-                    return getHtmlDateForDataTable(data);
-                }
-            },
-            { "data": "Description" }
-        ];
-
         const table = $('#vehicle-table').DataTable({
             scrollX: true,
             deferRender: true,
             autoWidth: true,
             select: true,
+            bLengthChange: false,
             bFilter: false,
+            bInfo: false,
             ajax: {
                 url: '@Url.Action("GetVehicles","Entity")',
                 method: 'GET'
@@ -95,11 +87,22 @@
             ],
         });
 
+        $('#btnReport').hide();
+        $('#btnReport').on('click', function (e) {
+            const id = getSelectedItemId($('#vehicle-table').DataTable());
+            if (id != -1) {
+                showReport(id);
+            }
+        });
+
+
         $('#vehicle-table').DataTable().on('select', function (e, dt, type, indexes) {
+            $('#btnReport').show();
             reloadTable();
         });
 
         $('#vehicle-table').DataTable().on('deselect', function (e, dt, type, indexes) {
+            $('#btnReport').hide();
             $('#services').html('');
         });
 
@@ -108,8 +111,8 @@
                 showInsertForm(
                     '@Url.Action("GetServiceForm","Entity")',
                     '@Url.Action("InsertService","Entity")',
-                    () => $('#vehicleID').val($(this).siblings('input:hidden').val()),
-                    reloadTable
+                    reloadTable,
+                    () => $('#vehicleID').val($(this).siblings('input:hidden').val())
                 );
             });
 
@@ -140,6 +143,24 @@
             } else {
                 $('#services').html('');
             }
+        }
+
+        function showReport(id) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GenerateReportForVehicle","Entity")',
+                data: { id: id },
+                dataType: 'html',
+                success: function (response) {
+                    $('.modal-title').text('Report');
+                    $('.modal-body').html(response);
+                    $('.modal-body').css('width', '100%');
+
+                    $('.modal-footer').find('.btn-primary').remove();
+
+                    $('#modal-form').modal('show');
+                }
+            });
         }
 
     </script>

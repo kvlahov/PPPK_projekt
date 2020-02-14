@@ -26,10 +26,13 @@ namespace PPPK.Models
         [StringLength(50)]
         public string Model { get; set; }
 
+        [Display(Name = "Year Manufactured")]
         public short YearManufactured { get; set; }
 
+        [Display(Name = "Initial Kilometres")]
         public double InitialKilometres { get; set; }
 
+        [Display(Name = "Available")]
         public bool IsAvailable { get; set; }
         [ScriptIgnore(ApplyToOverrides = true)]
         public virtual ICollection<ServiceInfo> ServiceInfos { get; set; }

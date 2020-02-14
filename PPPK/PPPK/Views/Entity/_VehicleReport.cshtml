@@ -1,0 +1,93 @@
+﻿@model PPPK.ViewModels.VehicleViewModel
+@{
+    var services = Model.Services
+        .GroupBy(s => s.DatetimeService, (date, group) => new { date = date.Value, items = group })
+        .OrderByDescending(m => m.date);
+}
+<div>
+    <h4>Vehicle</h4>
+
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Vehicle.Type)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Vehicle.Type)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Vehicle.Model)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Vehicle.Model)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Vehicle.Registration)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Vehicle.Registration)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Vehicle.YearManufactured)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Vehicle.YearManufactured)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.TotalKm)
+                </dt>
+
+                <dd>
+                    @String.Format("{0:n}", Model.TotalKm)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.AverageSpeed)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AverageSpeed)
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <h4>Services info</h4>
+    <hr />
+
+    @foreach (var service in services)
+    {
+        <h4>Date: <span>@service.date.ToString("dd.MM.yyyy")</span> </h4>
+        <div class="service-info-container">
+            @foreach (var item in service.items)
+            {
+                <dl class="dl-horizontal">
+                    <dt>Cost</dt>
+                    <dd>@item.Cost.Value.ToString("0.##")</dd>
+
+                    <dt>Description</dt>
+                    <dd>@item.Description</dd>
+                </dl>
+            }
+        </div>
+    }
+
+</div>
