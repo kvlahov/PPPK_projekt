@@ -16,6 +16,7 @@ namespace PPPK.Services
 {
     public class DataSetService
     {
+        private const string PATH = "App_Data/routeInfo.xml";
         private AppUnitOfWork unitOfWork;
         private SqlConnection _sqlConnection;
         private SqlDataAdapter dataAdapter;
@@ -24,7 +25,7 @@ namespace PPPK.Services
         {
             unitOfWork = new AppUnitOfWork();
             _sqlConnection = unitOfWork.Connection;
-            dataAdapter = new SqlDataAdapter("SELECT * FROM TravelOrder; SELECT * FROM RouteInfo", _sqlConnection);
+            dataAdapter = new SqlDataAdapter("SELECT * FROM RouteInfo", _sqlConnection);
         }
 
         public void ExportToXml()
@@ -32,13 +33,7 @@ namespace PPPK.Services
             DataSet dataSet = new DataSet("TravelOrderRouteInfo");
             dataAdapter.Fill(dataSet);
 
-            dataSet.Tables[0].TableName = "TravelOrder";
-            dataSet.Tables[1].TableName = "RouteInfo";
-
-            DataRelation relation = new DataRelation("relation",
-                dataSet.Tables[0].Columns["IDTravelOrder"], dataSet.Tables[1].Columns["TravelOrderID"]);
-            relation.Nested = true;
-            dataSet.Relations.Add(relation);
+            dataSet.Tables[0].TableName = "RouteInfo";
 
             dataSet.WriteXml(HostingEnvironment.MapPath("App_Data/routeInfo.xml"), XmlWriteMode.IgnoreSchema);
         }
@@ -47,26 +42,13 @@ namespace PPPK.Services
         {
             DataSet dataSet = new DataSet();
 
-            dataSet.ReadXml(HostingEnvironment.MapPath("App_Data/routeInfo.xml"));
+            var cmdBuilder = new SqlCommandBuilder(dataAdapter);
+            
+            dataSet.ReadXml(HostingEnvironment.MapPath(PATH));
 
             dataAdapter.Fill(dataSet);
+
             dataAdapter.Update(dataSet);
-
-            //foreach (DataRow rowDrzava in dataSet.Tables["TravelOrder"].Rows)
-            //{
-            //    int idDrzava = int.Parse(rowDrzava["IDTravelOrder"].ToString());
-            //    sb.Append(rowDrzava["Naziv"].ToString() + "<br/>[");
-
-            //    foreach (DataRow rowGrad in dataSet.Tables["RouteInfo"].Rows)
-            //    {
-            //        int drzavaID = int.Parse(rowGrad["DrzavaID"].ToString());
-            //        if (idDrzava == drzavaID)
-            //        {
-            //            sb.Append(rowGrad["Naziv"].ToString() + " ");
-            //        }
-            //    }
-            //    sb.Append("]<br/><br/>");
-            //}
         }
 
         public List<TravelOrder> GetTravelOrders()
