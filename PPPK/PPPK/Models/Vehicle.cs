@@ -34,6 +34,7 @@ namespace PPPK.Models
 
         [Display(Name = "Available")]
         public bool IsAvailable { get; set; }
+
         [ScriptIgnore(ApplyToOverrides = true)]
         public virtual ICollection<ServiceInfo> ServiceInfos { get; set; }
         [ScriptIgnore(ApplyToOverrides = true)]

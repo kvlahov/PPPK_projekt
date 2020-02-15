@@ -177,6 +177,7 @@
                     setAlertifyConfig();
                     if (response.success) {
                         alertify.success(response.message);
+                        $('#travel-order-table').DataTable().ajax.reload();
                     } else {
                         alertify.error(response.message);
                     }

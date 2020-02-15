@@ -95,6 +95,7 @@ namespace PPPK.Services
 
         internal object InsertVehicle(Vehicle model)
         {
+            model.IsAvailable = true;
             var newId = _unitOfWork.VehicleRepository.Add(model);
             return newId != 0;
         }

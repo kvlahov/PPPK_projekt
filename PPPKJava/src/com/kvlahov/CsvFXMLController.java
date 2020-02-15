@@ -67,8 +67,10 @@ public class CsvFXMLController implements Initializable {
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Csv", "*.csv"));
         chooser.setInitialDirectory(new File("src/data/csv"));
         selectedFile = chooser.showOpenDialog(importDataBtn.getScene().getWindow());
-        filePathLabel.setText("Selected file: " + selectedFile.getAbsolutePath());
-        fileSelected.set(true);
+        if(selectedFile != null) {
+            filePathLabel.setText("Selected file: " + selectedFile.getAbsolutePath());
+            fileSelected.set(true);
+        }
     }
 
     @FXML

@@ -25,30 +25,6 @@
       <LastName>Bee</LastName>
       <DriversLicence>vf654287</DriversLicence>
     </Driver>
-    <Driver>
-      <IDDriver>5</IDDriver>
-      <FirstName>﻿NewName</FirstName>
-      <LastName>NewSurname</LastName>
-      <DriversLicence>rt456878</DriversLicence>
-    </Driver>
-    <Driver>
-      <IDDriver>6</IDDriver>
-      <FirstName>Pero</FirstName>
-      <LastName>Stipis</LastName>
-      <DriversLicence>rt456880</DriversLicence>
-    </Driver>
-    <Driver>
-      <IDDriver>7</IDDriver>
-      <FirstName>Gordon</FirstName>
-      <LastName>Ramsay</LastName>
-      <DriversLicence>rt456881</DriversLicence>
-    </Driver>
-    <Driver>
-      <IDDriver>8</IDDriver>
-      <FirstName>British</FirstName>
-      <LastName>Ramsay</LastName>
-      <DriversLicence>rt456882</DriversLicence>
-    </Driver>
   </Drivers>
   <Vehicles>
     <Vehicle>
@@ -76,7 +52,7 @@
       <Model>Audi</Model>
       <YearManufactured>2004</YearManufactured>
       <InitialKilometres>25000</InitialKilometres>
-      <IsAvailable>False</IsAvailable>
+      <IsAvailable>True</IsAvailable>
     </Vehicle>
     <Vehicle>
       <IDVehicle>4</IDVehicle>
@@ -94,7 +70,7 @@
       <Model>Chevrolet</Model>
       <YearManufactured>2015</YearManufactured>
       <InitialKilometres>35000</InitialKilometres>
-      <IsAvailable>True</IsAvailable>
+      <IsAvailable>False</IsAvailable>
     </Vehicle>
     <Vehicle>
       <IDVehicle>6</IDVehicle>
@@ -106,39 +82,12 @@
       <IsAvailable>True</IsAvailable>
     </Vehicle>
     <Vehicle>
-      <IDVehicle>7</IDVehicle>
-      <Registration>zg1234ba</Registration>
-      <Type>Polo</Type>
-      <Model>Volkswagen</Model>
-      <YearManufactured>2010</YearManufactured>
-      <InitialKilometres>150000</InitialKilometres>
-      <IsAvailable>True</IsAvailable>
-    </Vehicle>
-    <Vehicle>
       <IDVehicle>8</IDVehicle>
-      <Registration>�i4323gt</Registration>
-      <Type>Lacetti</Type>
-      <Model>Chevrolet</Model>
-      <YearManufactured>2018</YearManufactured>
-      <InitialKilometres>50000</InitialKilometres>
-      <IsAvailable>True</IsAvailable>
-    </Vehicle>
-    <Vehicle>
-      <IDVehicle>9</IDVehicle>
-      <Registration>zd232bg</Registration>
-      <Type>Romeo</Type>
-      <Model>Alfa</Model>
-      <YearManufactured>2020</YearManufactured>
-      <InitialKilometres>1000</InitialKilometres>
-      <IsAvailable>True</IsAvailable>
-    </Vehicle>
-    <Vehicle>
-      <IDVehicle>10</IDVehicle>
-      <Registration>zg7656re</Registration>
-      <Type>Polo</Type>
+      <Registration>zg1234er</Registration>
+      <Type>Golf</Type>
       <Model>Volkswagen</Model>
-      <YearManufactured>2016</YearManufactured>
-      <InitialKilometres>35000</InitialKilometres>
+      <YearManufactured>2020</YearManufactured>
+      <InitialKilometres>1200</InitialKilometres>
       <IsAvailable>True</IsAvailable>
     </Vehicle>
   </Vehicles>
@@ -2386,37 +2335,30 @@
     <ServiceInfo>
       <IDService>1</IDService>
       <VehicleID>1</VehicleID>
-      <DatetimeService>11-Feb-20 10:13:39 PM</DatetimeService>
+      <DatetimeService>2/14/2020 10:57:45 AM</DatetimeService>
       <Cost>1000.0000</Cost>
       <Description>Promijenjena zadnja felga</Description>
     </ServiceInfo>
     <ServiceInfo>
       <IDService>2</IDService>
       <VehicleID>2</VehicleID>
-      <DatetimeService>01-Feb-20 12:00:00 AM</DatetimeService>
+      <DatetimeService>2/1/2020 12:00:00 AM</DatetimeService>
       <Cost>5000.0000</Cost>
       <Description>Zamjena cinculatora</Description>
     </ServiceInfo>
     <ServiceInfo>
       <IDService>3</IDService>
       <VehicleID>3</VehicleID>
-      <DatetimeService>25-Jan-20 12:00:00 AM</DatetimeService>
+      <DatetimeService>1/25/2020 12:00:00 AM</DatetimeService>
       <Cost>3500.0000</Cost>
       <Description>Curenje iz gefufne</Description>
     </ServiceInfo>
     <ServiceInfo>
       <IDService>4</IDService>
       <VehicleID>2</VehicleID>
-      <DatetimeService>05-Feb-20 12:00:00 AM</DatetimeService>
+      <DatetimeService>2/5/2020 12:00:00 AM</DatetimeService>
       <Cost>2100.0000</Cost>
-      <Description>Zamagljena zadnja stakla</Description>
-    </ServiceInfo>
-    <ServiceInfo>
-      <IDService>6</IDService>
-      <VehicleID>1</VehicleID>
-      <DatetimeService>12-Feb-20 12:00:00 AM</DatetimeService>
-      <Cost>1200.2500</Cost>
-      <Description>Pukla guma</Description>
+      <Description>Zamagljena stakla</Description>
     </ServiceInfo>
   </ServiceInfos>
   <TravelOrders>
@@ -2428,36 +2370,36 @@
       <CityStartId>1</CityStartId>
       <CityEndId>1</CityEndId>
       <ExpectedNumberOfDays>12</ExpectedNumberOfDays>
-      <ReasonForTravel>Bzvz</ReasonForTravel>
+      <ReasonForTravel>bezveze</ReasonForTravel>
       <TotalCost>1200.0000</TotalCost>
-      <DocumentDate>12-Feb-20 12:00:00 AM</DocumentDate>
+      <DocumentDate>2/14/2020 10:58:07 AM</DocumentDate>
     </TravelOrder>
     <TravelOrder>
       <IDTravelOrder>2</IDTravelOrder>
-      <DriverID>1</DriverID>
-      <VehicleID>3</VehicleID>
+      <DriverID>2</DriverID>
+      <VehicleID>5</VehicleID>
       <TravelOrderTypeID>1</TravelOrderTypeID>
-      <CityStartId>1</CityStartId>
-      <CityEndId>4</CityEndId>
-      <ExpectedNumberOfDays>5</ExpectedNumberOfDays>
-      <ReasonForTravel>Smece</ReasonForTravel>
-      <TotalCost>1000.0000</TotalCost>
-      <DocumentDate>12-Feb-20 4:00:44 PM</DocumentDate>
+      <CityStartId>2</CityStartId>
+      <CityEndId>20</CityEndId>
+      <ExpectedNumberOfDays>1200</ExpectedNumberOfDays>
+      <ReasonForTravel>Put oko svijeta</ReasonForTravel>
+      <TotalCost>2500.0000</TotalCost>
+      <DocumentDate>2/15/2020 10:22:12 AM</DocumentDate>
     </TravelOrder>
   </TravelOrders>
   <FuelInfos />
   <RouteInfos>
     <RouteInfo>
       <IDRouteInfo>1</IDRouteInfo>
-      <DateTimeStart>13-Feb-20 12:00:00 AM</DateTimeStart>
-      <DateTimeEnd>13-Feb-20 12:00:00 AM</DateTimeEnd>
-      <LatitudeStart />
-      <LongitudeStart>123</LongitudeStart>
-      <LatitudeEnd>879</LatitudeEnd>
-      <LongitudeEnd>7897</LongitudeEnd>
-      <DistanceInKm>1200</DistanceInKm>
-      <AverageSpeed>60.75</AverageSpeed>
-      <FuelExpense>1200</FuelExpense>
+      <DateTimeStart>2/15/2020 12:00:00 AM</DateTimeStart>
+      <DateTimeEnd>2/20/2020 12:00:00 AM</DateTimeEnd>
+      <LatitudeStart>43.34343</LatitudeStart>
+      <LongitudeStart>45.566565</LongitudeStart>
+      <LatitudeEnd>45.4545</LatitudeEnd>
+      <LongitudeEnd>34.3443</LongitudeEnd>
+      <DistanceInKm>120</DistanceInKm>
+      <AverageSpeed>60</AverageSpeed>
+      <FuelExpense>1500</FuelExpense>
       <TravelOrderID>1</TravelOrderID>
     </RouteInfo>
   </RouteInfos>
