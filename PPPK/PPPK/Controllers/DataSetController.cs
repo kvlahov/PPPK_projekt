@@ -16,12 +16,20 @@ namespace PPPK.Controllers
         {
             service = new DataSetService();
             xmlService = new XmlService();
+            //service.ExportToXml();
         }
 
         // GET: DataSet
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult ImportRouteInfo()
+        {
+            var success = service.ImportFromXml();
+            var message = success ? "Data sucessfuly imported" : "Import failed";
+            return Json(new { success, message }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CreateBackup()

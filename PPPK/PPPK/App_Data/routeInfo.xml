@@ -1,0 +1,54 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Table">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="IDRouteInfo" type="xs:int" minOccurs="0" />
+                <xs:element name="DateTimeStart" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="DateTimeEnd" type="xs:dateTime" minOccurs="0" />
+                <xs:element name="LatitudeStart" type="xs:double" minOccurs="0" />
+                <xs:element name="LongitudeStart" type="xs:double" minOccurs="0" />
+                <xs:element name="LatitudeEnd" type="xs:double" minOccurs="0" />
+                <xs:element name="LongitudeEnd" type="xs:double" minOccurs="0" />
+                <xs:element name="DistanceInKm" type="xs:double" minOccurs="0" />
+                <xs:element name="AverageSpeed" type="xs:double" minOccurs="0" />
+                <xs:element name="FuelExpense" type="xs:double" minOccurs="0" />
+                <xs:element name="TravelOrderID" type="xs:int" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Table>
+    <IDRouteInfo>1</IDRouteInfo>
+    <DateTimeStart>2020-02-15T00:00:00+01:00</DateTimeStart>
+    <DateTimeEnd>2020-02-15T00:00:00+01:00</DateTimeEnd>
+    <LatitudeStart>10</LatitudeStart>
+    <LongitudeStart>10</LongitudeStart>
+    <LatitudeEnd>10</LatitudeEnd>
+    <LongitudeEnd>10</LongitudeEnd>
+    <DistanceInKm>10</DistanceInKm>
+    <AverageSpeed>10</AverageSpeed>
+    <FuelExpense>10</FuelExpense>
+    <TravelOrderID>1</TravelOrderID>
+  </Table>
+  <Table>
+    <IDRouteInfo>1</IDRouteInfo>
+    <DateTimeStart>2020-02-15T00:00:00+01:00</DateTimeStart>
+    <DateTimeEnd>2020-02-15T00:00:00+01:00</DateTimeEnd>
+    <LatitudeStart>1</LatitudeStart>
+    <LongitudeStart>1</LongitudeStart>
+    <LatitudeEnd>1</LatitudeEnd>
+    <LongitudeEnd>1</LongitudeEnd>
+    <DistanceInKm>1</DistanceInKm>
+    <AverageSpeed>1</AverageSpeed>
+    <FuelExpense>1</FuelExpense>
+    <TravelOrderID>1</TravelOrderID>
+  </Table>
+</NewDataSet>

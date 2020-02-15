@@ -5,6 +5,12 @@
 
 <h2>DataSet</h2>
 
+<h4>Import Route info</h4>
+
+<div>
+    <button id="btnImportRI" class="btn bnt-primary">Import route info</button>
+</div>
+
 <h4>Xml</h4>
 <div>
     <button id="btnBackup" class="btn btn-info">Backup database</button>
@@ -78,6 +84,10 @@
 
         $('#btnRestore').on('click', e => {
             makeRestoreBackupAjax('@Url.Action("RestoreBackup", "DataSet")');
+        });
+
+        $('#btnImportRI').on('click', e => {
+            makeRestoreBackupAjax('@Url.Action("ImportRouteInfo", "DataSet")');
         });
 
 

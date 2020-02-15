@@ -16,39 +16,43 @@ namespace PPPK.Services
 {
     public class DataSetService
     {
-        private const string PATH = "App_Data/routeInfo.xml";
+        private const string PATH = "~/App_Data/routeInfo.xml";
         private AppUnitOfWork unitOfWork;
         private SqlConnection _sqlConnection;
         private SqlDataAdapter dataAdapter;
+        private DataSet dataSet;
 
         public DataSetService()
         {
             unitOfWork = new AppUnitOfWork();
             _sqlConnection = unitOfWork.Connection;
             dataAdapter = new SqlDataAdapter("SELECT * FROM RouteInfo", _sqlConnection);
+            var cmdBuilder = new SqlCommandBuilder(dataAdapter);
+            dataSet = new DataSet();
+            dataAdapter.Fill(dataSet);
+
+            //dataSet.Tables[0].TableName = "RouteInfo";
         }
 
         public void ExportToXml()
         {
-            DataSet dataSet = new DataSet("TravelOrderRouteInfo");
-            dataAdapter.Fill(dataSet);
-
-            dataSet.Tables[0].TableName = "RouteInfo";
-
-            dataSet.WriteXml(HostingEnvironment.MapPath("App_Data/routeInfo.xml"), XmlWriteMode.IgnoreSchema);
+            dataSet.WriteXml(HostingEnvironment.MapPath(PATH), XmlWriteMode.WriteSchema );
         }
 
-        public void ImportFromXml()
+        public bool ImportFromXml()
         {
-            DataSet dataSet = new DataSet();
+            try
+            {
+                dataSet.ReadXml(HostingEnvironment.MapPath(PATH), XmlReadMode.ReadSchema);
 
-            var cmdBuilder = new SqlCommandBuilder(dataAdapter);
-            
-            dataSet.ReadXml(HostingEnvironment.MapPath(PATH));
+                dataAdapter.Update(dataSet);
+                dataSet.AcceptChanges();
 
-            dataAdapter.Fill(dataSet);
-
-            dataAdapter.Update(dataSet);
+                return true;
+            } catch(Exception)
+            {
+                return false;
+            }
         }
 
         public List<TravelOrder> GetTravelOrders()

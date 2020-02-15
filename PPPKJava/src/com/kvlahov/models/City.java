@@ -45,7 +45,7 @@ public class City implements Serializable {
 
     public City() {
     }
-
++
     public City(Integer iDCity) {
         this.iDCity = iDCity;
     }
